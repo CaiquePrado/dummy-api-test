@@ -1,0 +1,42 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.rest-assured:rest-assured:5.5.0'
+    implementation 'io.rest-assured:json-path:5.5.0'
+    implementation 'io.rest-assured:json-schema-validator:5.5.0'
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    testImplementation 'org.testng:testng:7.10.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.24.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.24.1'
+}
+
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+test {
+    useTestNG {
+        def env = getEnvironment().get('-Denv') ?: getEnvironment().get('-Penv') ?: getEnvironment().get('env')
+        if (env != null) {
+            System.setProperty("env", env as String)
+        }
+        println "============ Utilizando ambiente: " + System.getProperty("env", "dev") + " ============ "
+        systemProperty "env", findProperty("env") ?: "dev"
+    }
+
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
+}
