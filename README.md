@@ -1,6 +1,6 @@
 # Dummyjson-api-test
 
-Este é um projeto que utiliza Rest-Assured e TestNg para testar uma API da sicredi. Ele é destinado para a criação de uma suíte de testes automatizados para validar os endpoints da API.
+Este é um projeto que utiliza Rest-Assured e TestNg para testar a API dummyjson. Ele é destinado para a criação de uma suíte de testes automatizados para validar os endpoints da API.
 
 ## Documentação de Testes
 
