@@ -10,7 +10,8 @@ public class DummyHealthCheckTest extends BaseTest {
 
     @Test(description = "HealthCheckTest")
     public void HealthCheckTest(){
-        dummyClient.getHealth()
+        dummyClient
+        .getHealth()
         .statusCode(SC_OK);
     }
 }
