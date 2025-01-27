@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 public class ApplicationConstants {
   public static final String ENV = "env";
   public static final String UAT = "uat";
+  public static final String VALID_ID = "1";
 }

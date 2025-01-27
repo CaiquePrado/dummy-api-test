@@ -1,7 +1,7 @@
 package client;
 
-import static constants.EndpointConstants.HTTP_200_CREATED;
-import static constants.EndpointConstants.HTTP_200_UP;
+import static constants.ApplicationConstants.VALID_ID;
+import static constants.EndpointConstants.*;
 import static io.restassured.RestAssured.given;
 
 import factory.ProductFactory;
@@ -27,8 +27,14 @@ public class DummyClient {
         return given().spec(requestSpec)
         .body(ProductFactory.validProductFactory())
         .when()
-        .post(HTTP_200_CREATED)
-        .then()
-        .log().all();
+        .post(HTTP_201_CREATED)
+        .then();
+    }
+
+    public ValidatableResponse deleteProductById(){
+        return given().spec(requestSpec)
+        .when()
+        .delete(HTTP_200_DELETED,VALID_ID)
+        .then();
     }
 }
