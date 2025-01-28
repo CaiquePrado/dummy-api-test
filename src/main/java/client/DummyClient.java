@@ -44,4 +44,11 @@ public class DummyClient {
         .get(HTTP_200_LIST)
         .then();
     }
+
+    public ValidatableResponse listProductById(){
+        return given().spec(requestSpec)
+        .when()
+        .get(HTTP_200_BY_ID, VALID_ID)
+        .then();
+    }
 }

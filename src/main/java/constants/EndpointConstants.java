@@ -9,4 +9,5 @@ public class EndpointConstants {
     public static final String HTTP_201_CREATED = "/products/add";
     public static final String HTTP_200_DELETED = "/products/{id}";
     public static final String HTTP_200_LIST = "/products";
+    public static final String HTTP_200_BY_ID = "/products/{id}";
 }
