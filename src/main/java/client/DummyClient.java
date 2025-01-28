@@ -37,4 +37,11 @@ public class DummyClient {
         .delete(HTTP_200_DELETED,VALID_ID)
         .then();
     }
+
+    public ValidatableResponse listAllProducts(){
+        return given().spec(requestSpec)
+        .when()
+        .get(HTTP_200_LIST)
+        .then();
+    }
 }
