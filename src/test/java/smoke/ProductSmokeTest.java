@@ -28,4 +28,11 @@ public class ProductSmokeTest extends BaseTest {
         .listAllProducts()
         .statusCode(SC_OK);
     }
+
+    @Test(description = "CT006.002")
+    public void shouldListProductById(){
+        dummyClient
+        .listProductById()
+        .statusCode(SC_OK);
+    }
 }
