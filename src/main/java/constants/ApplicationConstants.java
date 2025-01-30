@@ -12,4 +12,6 @@ public class ApplicationConstants {
   public static final String SCHEMAS = "src/test/resources/schemas";
   public static final String POST_PRODUCT_SCHEMA = "/POST-product-contract.json";
   public static final String GET_PRODUCTS_SCHEMA = "/GET-products-contract.json";
+  public static final String GET_PRODUCT_SCHEMA = "/GET-product-contract.json";
+  public static final String DELETE_PRODUCT_SCHEMA = "/DELETE-product-contract.json";
 }
