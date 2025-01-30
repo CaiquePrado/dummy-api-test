@@ -19,4 +19,11 @@ public interface ProductFactory {
         .thumbnail("https://i.dummyjson.com/data/products/11/thumnail.jpg")
         .build();
     }
+
+    static Product validUpdateProductFactory(){
+        return Product.builder()
+        .title("Perfume Oil")
+        .description("Mega Discount, Impression of A...")
+        .build();
+    }
 }

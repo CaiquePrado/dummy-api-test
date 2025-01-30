@@ -51,4 +51,12 @@ public class DummyClient {
         .get(HTTP_200_BY_ID, VALID_ID)
         .then();
     }
+
+    public ValidatableResponse updateProductById(){
+        return given().spec(requestSpec)
+        .body(ProductFactory.validUpdateProductFactory())
+        .when()
+        .put(HTTP_200_BY_ID, VALID_ID)
+        .then();
+    }
 }
