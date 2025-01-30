@@ -18,11 +18,27 @@ public class ProductContractTest extends BaseTest {
     }
 
     @Test(description = "CT004.001")
+    public void shouldDeleteProductContractTest(){
+        dummyClient
+        .deleteProductById()
+        .statusCode(SC_OK)
+        .body(matchesJsonSchema(new File(SCHEMAS + DELETE_PRODUCT_SCHEMA)));
+    }
+
+    @Test(description = "CT004.001")
     public void shouldListProductsContractTest(){
         dummyClient
         .listAllProducts()
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCTS_SCHEMA)));
+    }
+
+    @Test(description = "CT006.002")
+    public void shouldListProductByIdContractTest(){
+        dummyClient
+        .listProductById()
+        .statusCode(SC_OK)
+        .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCT_SCHEMA)));
     }
 
 }
