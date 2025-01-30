@@ -41,4 +41,12 @@ public class ProductContractTest extends BaseTest {
         .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCT_SCHEMA)));
     }
 
+    @Test(description = "CT006.002")
+    public void updateValidProductContractTest(){
+        dummyClient
+        .updateProductById()
+        .statusCode(SC_OK)
+        .body(matchesJsonSchema(new File(SCHEMAS + PUT_PRODUCT_SCHEMA)));
+    }
+
 }
