@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  healthcheck:
+    name: Health Check
+    runs-on: ubuntu-24.04
+    container:
+      image: gradle:8.12.0-jdk21
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Health Check
+        run: gradle clean test --tests 'DummyHealthCheckTest'
+
+  contract:
+    name: Contract
+    runs-on: ubuntu-24.04
+    needs: healthcheck
+    container:
+      image: gradle:8.12.0-jdk21
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Contract Test
+        run: gradle clean test --tests 'ProductContractTest'
+
+  smoke:
+    name: Smoke
+    runs-on: ubuntu-24.04
+    needs: contract
+    container:
+      image: gradle:8.12.0-jdk21
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Smoke Test
+        run: gradle clean test --tests 'ProductSmokeTest'
