@@ -4,7 +4,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 import org.testng.annotations.Test;
 
-import client.BaseTest;
+import base.BaseTest;
 
 public class DummyHealthCheckTest extends BaseTest {
 

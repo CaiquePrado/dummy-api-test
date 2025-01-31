@@ -1,4 +1,4 @@
-package utils;
+package config;
 
 import static java.nio.file.Files.newInputStream;
 

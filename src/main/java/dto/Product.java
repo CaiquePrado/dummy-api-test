@@ -2,13 +2,15 @@ package dto;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
-//    private Long id;
     private String title;
     private String description;
     private BigDecimal price;

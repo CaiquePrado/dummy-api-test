@@ -1,6 +1,6 @@
-package utils;
+package config;
 
-import static utils.FileReader.readFile;
+import static config.FileReader.readFile;
 
 import java.io.IOException;
 import java.util.Properties;

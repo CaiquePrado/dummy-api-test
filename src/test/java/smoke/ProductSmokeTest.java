@@ -4,7 +4,7 @@ import static org.apache.http.HttpStatus.*;
 
 import org.testng.annotations.Test;
 
-import client.BaseTest;
+import base.BaseTest;
 
 public class ProductSmokeTest extends BaseTest {
 
@@ -37,7 +37,7 @@ public class ProductSmokeTest extends BaseTest {
     }
 
     @Test(description = "CT006.002")
-    public void updateValidProductTest(){
+    public void updateValidProductTest() {
         dummyClient
         .updateProductById()
         .statusCode(SC_OK);

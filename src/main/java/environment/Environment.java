@@ -1,7 +1,7 @@
 package environment;
 
-import static constants.ApplicationConstants.ENV;
-import static constants.ApplicationConstants.UAT;
+import static utils.ApplicationConstants.ENV;
+import static utils.ApplicationConstants.UAT;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

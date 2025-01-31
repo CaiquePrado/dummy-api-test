@@ -1,11 +1,11 @@
 package contract;
 
-import client.BaseTest;
+import base.BaseTest;
 import org.testng.annotations.Test;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.apache.http.HttpStatus.*;
 import java.io.File;
-import static constants.ApplicationConstants.*;
+import static utils.ApplicationConstants.*;
 
 public class ProductContractTest extends BaseTest {
 

@@ -1,8 +1,8 @@
 package client;
 
-import static constants.ApplicationConstants.VALID_ID;
-import static constants.EndpointConstants.*;
 import static io.restassured.RestAssured.given;
+import static utils.ApplicationConstants.VALID_ID;
+import static utils.EndpointConstants.*;
 
 import factory.ProductFactory;
 import io.restassured.response.ValidatableResponse;
