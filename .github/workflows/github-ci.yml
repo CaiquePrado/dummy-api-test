@@ -21,8 +21,8 @@ jobs:
       - name: Health Check
         run: gradle clean test --tests 'DummyHealthCheckTest'
 
-  contract:
-    name: Contract
+  smoke:
+    name: Smoke
     runs-on: ubuntu-24.04
     needs: healthcheck
     container:
@@ -31,18 +31,18 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Contract Test
-        run: gradle clean test --tests 'ProductContractTest'
+      - name: Smoke Test
+        run: gradle clean test --tests 'ProductSmokeTest'
 
-  smoke:
-    name: Smoke
+  contract:
+    name: Contract
     runs-on: ubuntu-24.04
-    needs: contract
+    needs: smoke
     container:
       image: gradle:8.12.0-jdk21
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Smoke Test
-        run: gradle clean test --tests 'ProductSmokeTest'
+      - name: Contract Test
+        run: gradle clean test --tests 'ProductContractTest'
