@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static utils.ApplicationConstants.VALID_ID;
 import static utils.EndpointConstants.*;
 
+import dto.Product;
 import factory.ProductFactory;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
@@ -57,6 +58,14 @@ public class DummyClient {
         .body(ProductFactory.validUpdateProductFactory())
         .when()
         .put(HTTP_200_BY_ID, VALID_ID)
+        .then();
+    }
+
+    public ValidatableResponse createValidProductOneAttribute(Product product){
+        return given().spec(requestSpec)
+        .body(product)
+        .when()
+        .post(HTTP_201_CREATED)
         .then();
     }
 }
