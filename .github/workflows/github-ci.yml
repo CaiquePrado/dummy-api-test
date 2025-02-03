@@ -46,3 +46,16 @@ jobs:
 
       - name: Contract Test
         run: gradle clean test --tests 'ProductContractTest'
+
+  functional:
+    name: Functional
+    runs-on: ubuntu-24.04
+    needs: contract
+    container:
+      image: gradle:8.12.0-jdk21
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Functional Test
+        run: gradle clean test --tests 'ProductFunctionalTest'
