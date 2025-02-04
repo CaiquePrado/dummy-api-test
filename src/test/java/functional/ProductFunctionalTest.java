@@ -6,7 +6,8 @@ import factory.ProductFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.*;
+import static utils.ApplicationConstants.*;
 
 public class ProductFunctionalTest extends BaseTest {
 
@@ -30,5 +31,12 @@ public class ProductFunctionalTest extends BaseTest {
         dummyClient
         .createValidProductOneAttribute(product)
         .statusCode(SC_CREATED);
+    }
+
+    @Test
+    public void shouldNotDeleteProductByInvalidId(){
+        dummyClient
+        .deleteProductById(INVALID_ID)
+        .statusCode(SC_NOT_FOUND);
     }
 }
