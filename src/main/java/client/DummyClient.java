@@ -32,10 +32,10 @@ public class DummyClient {
         .then();
     }
 
-    public ValidatableResponse deleteProductById(){
+    public ValidatableResponse deleteProductById(String productId){
         return given().spec(requestSpec)
         .when()
-        .delete(HTTP_200_DELETED,VALID_ID)
+        .delete(HTTP_200_DELETED,productId)
         .then();
     }
 

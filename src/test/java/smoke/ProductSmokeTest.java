@@ -1,6 +1,7 @@
 package smoke;
 
 import static org.apache.http.HttpStatus.*;
+import static utils.ApplicationConstants.VALID_ID;
 
 import org.testng.annotations.Test;
 
@@ -18,7 +19,7 @@ public class ProductSmokeTest extends BaseTest {
     @Test(description = "CT004.001")
     public void shouldDeleteProductTest(){
         dummyClient
-        .deleteProductById()
+        .deleteProductById(VALID_ID)
         .statusCode(SC_OK);
     }
 

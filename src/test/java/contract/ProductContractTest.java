@@ -20,7 +20,7 @@ public class ProductContractTest extends BaseTest {
     @Test(description = "CT004.001")
     public void shouldDeleteProductContractTest(){
         dummyClient
-        .deleteProductById()
+        .deleteProductById(VALID_ID)
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + DELETE_PRODUCT_SCHEMA)));
     }
