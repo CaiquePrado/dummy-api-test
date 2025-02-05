@@ -39,4 +39,11 @@ public class ProductFunctionalTest extends BaseTest {
         .deleteProductById(INVALID_ID)
         .statusCode(SC_NOT_FOUND);
     }
+
+    @Test
+    public void shouldNotFindProductByInvalidId(){
+        dummyClient
+        .listProductById(INVALID_ID)
+        .statusCode(SC_NOT_FOUND);
+    }
 }
