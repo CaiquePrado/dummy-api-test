@@ -68,4 +68,11 @@ public class DummyClient {
         .post(HTTP_201_CREATED)
         .then();
     }
+
+    public ValidatableResponse shouldSearchProduct(){
+        return given().spec(requestSpec)
+        .when()
+        .get(HTTP_200_SEARCH)
+        .then();
+    }
 }
