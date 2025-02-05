@@ -36,7 +36,7 @@ public class ProductContractTest extends BaseTest {
     @Test(description = "CT006.002")
     public void shouldListProductByIdContractTest(){
         dummyClient
-        .listProductById()
+        .listProductById(VALID_ID)
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCT_SCHEMA)));
     }

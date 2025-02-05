@@ -33,7 +33,7 @@ public class ProductSmokeTest extends BaseTest {
     @Test(description = "CT006.002")
     public void shouldListProductByIdTest(){
         dummyClient
-        .listProductById()
+        .listProductById(VALID_ID)
         .statusCode(SC_OK);
     }
 

@@ -46,10 +46,10 @@ public class DummyClient {
         .then();
     }
 
-    public ValidatableResponse listProductById(){
+    public ValidatableResponse listProductById(String productId){
         return given().spec(requestSpec)
         .when()
-        .get(HTTP_200_BY_ID, VALID_ID)
+        .get(HTTP_200_BY_ID, productId)
         .then();
     }
 
