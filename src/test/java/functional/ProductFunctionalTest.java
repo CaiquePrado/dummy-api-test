@@ -34,16 +34,23 @@ public class ProductFunctionalTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotDeleteProductByInvalidId(){
+    public void shouldNotDeleteProductByInvalidIdTest(){
         dummyClient
         .deleteProductById(INVALID_ID)
         .statusCode(SC_NOT_FOUND);
     }
 
     @Test
-    public void shouldNotFindProductByInvalidId(){
+    public void shouldNotFindProductByInvalidIdTest(){
         dummyClient
         .listProductById(INVALID_ID)
         .statusCode(SC_NOT_FOUND);
+    }
+
+    @Test
+    public void shouldSearchProductTest(){
+        dummyClient
+        .shouldSearchProduct()
+        .statusCode(SC_OK);
     }
 }
