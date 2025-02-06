@@ -9,6 +9,7 @@ public class ApplicationConstants {
   public static final String UAT = "uat";
   public static final String VALID_ID = "1";
   public static final String INVALID_ID = "&";
+  public static final String VALID_SEARCH = "iphone 9";
 
   public static final String SCHEMAS = "src/test/resources/schemas";
   public static final String POST_PRODUCT_SCHEMA = "/POST-product-contract.json";

@@ -47,10 +47,19 @@ public class ProductFunctionalTest extends BaseTest {
         .statusCode(SC_NOT_FOUND);
     }
 
-    @Test
-    public void shouldSearchProductTest(){
+    @DataProvider(name = "searchFactory")
+    public Object[][] searchFactory() {
+        return new Object[][]{
+                {"phone"},
+                {"laptop"},
+                {""}
+        };
+    }
+
+    @Test(dataProvider = "searchFactory")
+    public void shouldSearchProductByNameTest(String search){
         dummyClient
-        .shouldSearchProduct()
+        .searchProductByName(search)
         .statusCode(SC_OK);
     }
 }

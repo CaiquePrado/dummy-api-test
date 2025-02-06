@@ -69,10 +69,17 @@ public class DummyClient {
         .then();
     }
 
-    public ValidatableResponse shouldSearchProduct(){
+    public ValidatableResponse searchProductByName(String search){
         return given().spec(requestSpec)
         .when()
-        .get(HTTP_200_SEARCH)
+        .get(String.format(HTTP_200_SEARCH, search))
         .then();
+    }
+
+    public ValidatableResponse searchProductsByPage(int limit){
+        return  given().spec(requestSpec)
+        .when()
+                .get(String.format(HTTP_200_SEARCH, limit))
+                .then();
     }
 }
