@@ -79,7 +79,7 @@ public class DummyClient {
     public ValidatableResponse searchProductsByPage(int limit){
         return  given().spec(requestSpec)
         .when()
-                .get(String.format(HTTP_200_SEARCH, limit))
-                .then();
+        .get(String.format(HTTP_200_LIMIT, limit))
+        .then();
     }
 }
