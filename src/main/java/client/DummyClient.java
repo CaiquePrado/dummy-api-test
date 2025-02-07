@@ -82,4 +82,11 @@ public class DummyClient {
         .get(String.format(HTTP_200_LIMIT, limit))
         .then();
     }
+
+    public ValidatableResponse skipProductsByPage(int skip){
+        return  given().spec(requestSpec)
+        .when()
+        .get(String.format(HTTP_200_SKIP, skip))
+        .then();
+    }
 }
