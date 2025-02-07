@@ -78,4 +78,20 @@ public class ProductFunctionalTest extends BaseTest {
         .searchProductsByPage(limit)
         .statusCode(SC_OK);
     }
+
+    @DataProvider(name = "skipFactory")
+    public Object[][] skipFactory() {
+        return new Object[][]{
+                {10},
+                {100},
+                {1000}
+        };
+    }
+
+    @Test(dataProvider = "skipFactory")
+    public void shouldSkipProductsTest(int skip){
+        dummyClient
+        .skipProductsByPage(skip)
+        .statusCode(SC_OK);
+    }
 }
