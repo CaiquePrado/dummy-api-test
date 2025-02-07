@@ -62,4 +62,20 @@ public class ProductFunctionalTest extends BaseTest {
         .searchProductByName(search)
         .statusCode(SC_OK);
     }
+
+    @DataProvider(name = "limitFactory")
+    public Object[][] limitFactory() {
+        return new Object[][]{
+                {10},
+                {100},
+                {1000}
+        };
+    }
+
+    @Test(dataProvider = "limitFactory")
+    public void shouldPaginateProductsTest(int limit){
+        dummyClient
+        .searchProductsByPage(limit)
+        .statusCode(SC_OK);
+    }
 }
