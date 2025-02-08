@@ -83,6 +83,20 @@ public class DummyClient {
         .then();
     }
 
+    public ValidatableResponse searchProductsByPage(){
+        return  given().spec(requestSpec)
+        .when()
+        .get(String.format(HTTP_400_LIMIT))
+        .then();
+    }
+
+    public ValidatableResponse skipProductsByPage(){
+        return  given().spec(requestSpec)
+        .when()
+        .get(String.format(HTTP_400_SKIP))
+        .then();
+    }
+
     public ValidatableResponse skipProductsByPage(int skip){
         return  given().spec(requestSpec)
         .when()
