@@ -137,7 +137,14 @@ public class ProductFunctionalTest extends BaseTest {
     @Test(dataProvider = "selectFactory")
     public void shouldSelectProductsTest(String select){
         dummyClient
-        .SelectProductByAttribute(select)
+        .selectProductByAttribute(select)
+        .statusCode(SC_OK);
+    }
+
+    @Test
+    public void shouldSelectSkipAndLimitProductsTest(){
+        dummyClient
+        .selectLimitSkipProducts()
         .statusCode(SC_OK);
     }
 }
