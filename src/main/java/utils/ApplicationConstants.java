@@ -9,6 +9,9 @@ public class ApplicationConstants {
   public static final String UAT = "uat";
   public static final String VALID_ID = "1";
   public static final String INVALID_ID = "&";
+  public static final int VALID_LIMIT = 10;
+  public static final int VALID_SKIP = 10;
+  public static final String VALID_SELECT = "title,price";
 
   public static final String SCHEMAS = "src/test/resources/schemas";
   public static final String POST_PRODUCT_SCHEMA = "/POST-product-contract.json";

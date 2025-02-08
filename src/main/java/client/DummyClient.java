@@ -2,6 +2,7 @@ package client;
 
 import static io.restassured.RestAssured.given;
 import static utils.ApplicationConstants.VALID_ID;
+import static utils.ApplicationConstants.*;
 import static utils.EndpointConstants.*;
 
 import dto.Product;
@@ -104,10 +105,17 @@ public class DummyClient {
         .then();
     }
 
-    public ValidatableResponse SelectProductByAttribute(String Attribute){
+    public ValidatableResponse selectProductByAttribute(String attribute){
         return given().spec(requestSpec)
         .when()
-        .get(String.format(HTTP_200_SEARCH, Attribute))
+        .get(String.format(HTTP_200_SELECT, attribute))
+        .then();
+    }
+
+    public ValidatableResponse selectLimitSkipProducts ( ){
+        return given().spec(requestSpec)
+        .when()
+        .get(String.format(HTTP_200_LIMIT_SKIP_SELECT,VALID_LIMIT, VALID_SKIP, VALID_SELECT))
         .then();
     }
 }

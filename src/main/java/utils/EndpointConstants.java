@@ -16,5 +16,5 @@ public class EndpointConstants {
     public static final String HTTP_200_SKIP = "/products?skip=%d";
     public static final String HTTP_400_SKIP = "/products?skip=''";
     public static final String HTTP_200_SELECT = "/products?select=%s";
-
+    public static final String HTTP_200_LIMIT_SKIP_SELECT = "/products?limit=%d&skip=%d&select=%s";
 }
