@@ -103,4 +103,11 @@ public class DummyClient {
         .get(String.format(HTTP_200_SKIP, skip))
         .then();
     }
+
+    public ValidatableResponse SelectProductByAttribute(String Attribute){
+        return given().spec(requestSpec)
+        .when()
+        .get(String.format(HTTP_200_SEARCH, Attribute))
+        .then();
+    }
 }
