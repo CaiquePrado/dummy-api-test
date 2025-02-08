@@ -119,4 +119,25 @@ public class ProductFunctionalTest extends BaseTest {
 
         assertThat(expectedMessage.getMessage(), is("Invalid 'skip' - must be a number"));
     }
+
+    @DataProvider(name = "selectFactory")
+    public Object[][] selectFactory() {
+        return new Object[][]{
+                {"title"},
+                {"price"},
+                {"description"},
+                {"discountPercentage"},
+                {"rating"},
+                {"stock"},
+                {"brand"},
+                {"category"}
+        };
+    }
+
+    @Test(dataProvider = "selectFactory")
+    public void shouldSelectProductsTest(String select){
+        dummyClient
+        .SelectProductByAttribute(select)
+        .statusCode(SC_OK);
+    }
 }
