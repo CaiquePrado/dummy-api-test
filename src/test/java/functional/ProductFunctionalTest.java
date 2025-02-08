@@ -1,11 +1,14 @@
 package functional;
 
 import base.BaseTest;
+import dto.Message;
 import dto.Product;
 import factory.ProductFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.apache.http.HttpStatus.*;
 import static utils.ApplicationConstants.*;
 
@@ -77,6 +80,17 @@ public class ProductFunctionalTest extends BaseTest {
         dummyClient
         .searchProductsByPage(limit)
         .statusCode(SC_OK);
+    }
+
+    @Test
+    public void shouldNotPaginateProductsTest(){
+        var expectedMessage = dummyClient
+        .searchProductsByPage()
+        .statusCode(SC_BAD_REQUEST)
+        .extract()
+        .as(Message.class);
+
+        assertThat(expectedMessage.getMessage(), is("Invalid 'limit' - must be a number"));
     }
 
     @DataProvider(name = "skipFactory")
