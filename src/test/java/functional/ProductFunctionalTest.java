@@ -108,4 +108,15 @@ public class ProductFunctionalTest extends BaseTest {
         .skipProductsByPage(skip)
         .statusCode(SC_OK);
     }
+
+    @Test
+    public void shouldNotSkipProductsTest(){
+        var expectedMessage = dummyClient
+        .skipProductsByPage()
+        .statusCode(SC_BAD_REQUEST)
+        .extract()
+        .as(Message.class);
+
+        assertThat(expectedMessage.getMessage(), is("Invalid 'skip' - must be a number"));
+    }
 }
