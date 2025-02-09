@@ -147,4 +147,11 @@ public class ProductFunctionalTest extends BaseTest {
         .selectLimitSkipProducts()
         .statusCode(SC_OK);
     }
+
+    @Test
+    public void shouldListCategoriesTest(){
+        dummyClient
+        .listAllCategories()
+        .statusCode(SC_OK);
+    }
 }
