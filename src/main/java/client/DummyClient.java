@@ -118,4 +118,12 @@ public class DummyClient {
         .get(String.format(HTTP_200_LIMIT_SKIP_SELECT,VALID_LIMIT, VALID_SKIP, VALID_SELECT))
         .then();
     }
+
+    public ValidatableResponse listAllCategories(){
+        return given().spec(requestSpec)
+        .when()
+        .get(HTTP_200_CATEGORY)
+        .then();
+    }
+
 }
