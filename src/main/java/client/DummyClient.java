@@ -126,4 +126,11 @@ public class DummyClient {
         .then();
     }
 
+    public  ValidatableResponse listProductsByCategory(String category){
+        return given().spec(requestSpec)
+        .when()
+        .get(String.format(HTTP_200_PRODUCT_CATEGORY, category))
+        .then();
+    }
+
 }
