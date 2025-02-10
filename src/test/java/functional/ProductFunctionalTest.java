@@ -190,4 +190,21 @@ public class ProductFunctionalTest extends BaseTest {
         .listProductsByCategory(category)
         .statusCode(SC_OK);
     }
+
+    @DataProvider(name = "orderFactory")
+    public Object[][] orderFactory() {
+        return new Object[][]{
+                {"nulls_first"},
+                {"nulls_last"},
+                {"random"},
+                {"@#@"}
+        };
+    }
+
+    @Test(dataProvider = "orderFactory")
+    public void shouldNotListProductsWithInvalidOrderTest(String order){
+        dummyClient
+        .listProductsByOrder(order)
+        .statusCode(SC_BAD_REQUEST);
+    }
 }
