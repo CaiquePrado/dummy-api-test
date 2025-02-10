@@ -194,6 +194,21 @@ public class ProductFunctionalTest extends BaseTest {
     @DataProvider(name = "orderFactory")
     public Object[][] orderFactory() {
         return new Object[][]{
+                {"asc"},
+                {"desc"}
+        };
+    }
+
+    @Test(dataProvider = "orderFactory")
+    public void shouldListProductsOrderTest(String order){
+        dummyClient
+        .listProductsByOrder(order)
+        .statusCode(SC_OK);
+    }
+
+    @DataProvider(name = "invalidOrderFactory")
+    public Object[][] invalidOrderFactory() {
+        return new Object[][]{
                 {"nulls_first"},
                 {"nulls_last"},
                 {"random"},
@@ -201,7 +216,7 @@ public class ProductFunctionalTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "orderFactory")
+    @Test(dataProvider = "invalidOrderFactory")
     public void shouldNotListProductsWithInvalidOrderTest(String order){
         dummyClient
         .listProductsByOrder(order)

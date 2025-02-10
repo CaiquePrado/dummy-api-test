@@ -136,7 +136,7 @@ public class DummyClient {
     public ValidatableResponse listProductsByOrder(String order){
         return given().spec(requestSpec)
         .when()
-        .get(String.format(HTTP_400_ORDER, order))
+        .get(String.format(HTTP_ORDER, order))
         .then();
     }
 
