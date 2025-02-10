@@ -154,4 +154,40 @@ public class ProductFunctionalTest extends BaseTest {
         .listAllCategories()
         .statusCode(SC_OK);
     }
+
+    @DataProvider(name = "categoriesFactory")
+    public Object[][] categoriesFactory() {
+        return new Object[][]{
+                {"beauty"},
+                {"fragrances"},
+                {"furniture"},
+                {"groceries"},
+                {"home-decoration"},
+                {"kitchen-accessories"},
+                {"laptops"},
+                {"mens-shirts"},
+                {"mens-shoes"},
+                {"mens-watches"},
+                {"mobile-accessories"},
+                {"motorcycle"},
+                {"skin-care"},
+                {"smartphones"},
+                {"sports-accessories"},
+                {"sunglasses"},
+                {"tablets"},
+                {"tops"},
+                {"vehicle"},
+                {"womens-bags"},
+                {"womens-dresses"},
+                {"womens-jewellery"},
+                {"womens-shoes"},
+                {"womens-watches"}
+        };
+    }
+    @Test(dataProvider = "categoriesFactory")
+    public void shouldListProductsByCategoryTest(String category){
+        dummyClient
+        .listProductsByCategory(category)
+        .statusCode(SC_OK);
+    }
 }
