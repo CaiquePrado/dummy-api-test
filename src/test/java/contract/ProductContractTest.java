@@ -49,4 +49,22 @@ public class ProductContractTest extends BaseTest {
         .body(matchesJsonSchema(new File(SCHEMAS + PUT_PRODUCT_SCHEMA)));
     }
 
+    @Test(description = "CT004.001")
+    public void shouldNotDeleteProductContractTest(){
+        dummyClient
+        .deleteProductById(INVALID_ID)
+        .statusCode(SC_NOT_FOUND)
+        .body(matchesJsonSchema(new File(SCHEMAS + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+    }
+
+    @Test(description = "CT006.002")
+    public void shouldNotListProductByIdContractTest(){
+        dummyClient
+        .listProductById(INVALID_ID)
+        .statusCode(SC_NOT_FOUND)
+        .body(matchesJsonSchema(new File(SCHEMAS + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+    }
+    //TODO: teste com selected no parametro da url
+    //TODO: assert para teste category
+
 }
