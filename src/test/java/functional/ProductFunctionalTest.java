@@ -1,11 +1,13 @@
 package functional;
 
 import base.BaseTest;
+import dto.Category;
 import dto.Message;
 import dto.Product;
 import factory.ProductFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import response.CategoryResponse;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -36,18 +38,39 @@ public class ProductFunctionalTest extends BaseTest {
         .statusCode(SC_CREATED);
     }
 
-    @Test
-    public void shouldNotDeleteProductByInvalidIdTest(){
-        dummyClient
-        .deleteProductById(INVALID_ID)
-        .statusCode(SC_NOT_FOUND);
+    @DataProvider(name = "invalidIds")
+    public Object[][] provideInvalidIds() {
+        return new Object[][]{
+                {"12345"},
+                {"invalid-id"},
+                {"!@#$%"}
+        };
     }
 
-    @Test
-    public void shouldNotFindProductByInvalidIdTest(){
-        dummyClient
-        .listProductById(INVALID_ID)
-        .statusCode(SC_NOT_FOUND);
+    @Test(dataProvider = "invalidIds")
+    public void shouldNotDeleteProductByInvalidIdTest(String invalidId){
+        var expectedMessage = dummyClient
+        .deleteProductById(invalidId)
+        .statusCode(SC_NOT_FOUND)
+        .extract()
+        .as(Message.class);
+
+        String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
+
+        assertThat(expectedMessage.getMessage(), is(expectedErrorMessage));
+    }
+
+    @Test(dataProvider = "invalidIds")
+    public void shouldNotFindProductByInvalidIdTest(String invalidId){
+        var expectedMessage = dummyClient
+        .listProductById(invalidId)
+        .statusCode(SC_NOT_FOUND)
+        .extract()
+        .as(Message.class);
+
+        String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
+
+        assertThat(expectedMessage.getMessage(), is(expectedErrorMessage));
     }
 
     @DataProvider(name = "searchFactory")
@@ -153,6 +176,8 @@ public class ProductFunctionalTest extends BaseTest {
         dummyClient
         .listAllCategories()
         .statusCode(SC_OK);
+
+//        assertThat(expectedCategory, is(CategoryResponse.validCategoryResponse()));
     }
 
     @DataProvider(name = "categoriesFactory")

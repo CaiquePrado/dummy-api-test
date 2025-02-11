@@ -17,7 +17,7 @@ public class EndpointConstants {
     public static final String HTTP_400_SKIP = "/products?skip=''";
     public static final String HTTP_200_SELECT = "/products?select=%s";
     public static final String HTTP_200_LIMIT_SKIP_SELECT = "/products?limit=%d&skip=%d&select=%s";
-    public static final String HTTP_200_CATEGORY = "/products/categories";
+    public static final String HTTP_200_CATEGORY = "/products/category-list";
     public static final String HTTP_200_PRODUCT_CATEGORY = "/products/category/%s";
     public static final String HTTP_ORDER = "/products?sortBy=title&order=%s";
 }
