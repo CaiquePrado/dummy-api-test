@@ -12,6 +12,7 @@ public class ApplicationConstants {
   public static final int VALID_LIMIT = 10;
   public static final int VALID_SKIP = 10;
   public static final String VALID_SELECT = "title,price";
+  public static final String VALID_NAME = "phone";
 
   public static final String SCHEMAS = "src/test/resources/schemas";
   public static final String POST_PRODUCT_SCHEMA = "/POST-product-contract.json";
@@ -19,4 +20,6 @@ public class ApplicationConstants {
   public static final String GET_PRODUCT_SCHEMA = "/GET-product-contract.json";
   public static final String DELETE_PRODUCT_SCHEMA = "/DELETE-product-contract.json";
   public static final String PUT_PRODUCT_SCHEMA = "/PUT-product-contract.json";
+  public static final String DELETE_GET_INVALID_PRODUCT_SCHEMA = "/GET-DELETE-invalid-product-contract.json";
+  public static final String GET_SEARCH_PRODUCT_SCHEMA = "/GET-search-product-contract.json";
 }

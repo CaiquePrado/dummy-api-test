@@ -12,7 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Category {
-    private String slug;
-    private String name;
-    private String url;
+    private String category;
 }

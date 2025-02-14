@@ -64,6 +64,14 @@ public class ProductContractTest extends BaseTest {
         .statusCode(SC_NOT_FOUND)
         .body(matchesJsonSchema(new File(SCHEMAS + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
+
+    @Test
+    public void shouldSearchProductByNameTest(){
+        dummyClient
+        .searchProductByName(VALID_NAME)
+        .statusCode(SC_OK)
+        .body(matchesJsonSchema(new File(SCHEMAS + GET_SEARCH_PRODUCT_SCHEMA)));
+    }
     //TODO: teste com selected no parametro da url
     //TODO: assert para teste category
 
