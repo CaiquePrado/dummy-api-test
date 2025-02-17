@@ -1,18 +1,15 @@
 package functional;
 
 import base.BaseTest;
-import dto.Category;
 import dto.Message;
 import dto.Product;
 import factory.ProductFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import response.CategoryResponse;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.apache.http.HttpStatus.*;
-import static utils.ApplicationConstants.*;
 
 public class ProductFunctionalTest extends BaseTest {
 
@@ -57,7 +54,7 @@ public class ProductFunctionalTest extends BaseTest {
 
         String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
 
-        assertThat(expectedMessage.getMessage(), is(expectedErrorMessage));
+        assertThat(expectedMessage.message(), is(expectedErrorMessage));
     }
 
     @Test(dataProvider = "invalidIds")
@@ -70,7 +67,7 @@ public class ProductFunctionalTest extends BaseTest {
 
         String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
 
-        assertThat(expectedMessage.getMessage(), is(expectedErrorMessage));
+        assertThat(expectedMessage.message(), is(expectedErrorMessage));
     }
 
     @DataProvider(name = "searchFactory")
@@ -83,7 +80,7 @@ public class ProductFunctionalTest extends BaseTest {
     }
 
     @Test(dataProvider = "searchFactory")
-    public void shouldSearchProductByNameTest(String search){
+    public void shouldSearchProductByNameTest(String search) {
         dummyClient
         .searchProductByName(search)
         .statusCode(SC_OK);
@@ -113,7 +110,7 @@ public class ProductFunctionalTest extends BaseTest {
         .extract()
         .as(Message.class);
 
-        assertThat(expectedMessage.getMessage(), is("Invalid 'limit' - must be a number"));
+        assertThat(expectedMessage.message(), is("Invalid 'limit' - must be a number"));
     }
 
     @DataProvider(name = "skipFactory")
@@ -140,7 +137,7 @@ public class ProductFunctionalTest extends BaseTest {
         .extract()
         .as(Message.class);
 
-        assertThat(expectedMessage.getMessage(), is("Invalid 'skip' - must be a number"));
+        assertThat(expectedMessage.message(), is("Invalid 'skip' - must be a number"));
     }
 
     @DataProvider(name = "selectFactory")
