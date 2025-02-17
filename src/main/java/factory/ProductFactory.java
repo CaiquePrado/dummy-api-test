@@ -80,5 +80,4 @@ public interface ProductFactory {
         .thumbnail("https://i.dummyjson.com/data/products/11/thumnail.jpg")
         .build();
     }
-
 }
