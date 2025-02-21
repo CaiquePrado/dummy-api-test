@@ -11,35 +11,35 @@ public class ProductSmokeTest extends BaseTest {
 
     @Test(description = "CT003.001")
     public void shouldCreateProductTest(){
-        dummyClient
+        productClient
         .createValidProduct()
         .statusCode(SC_CREATED);
     }
 
     @Test(description = "CT004.001")
     public void shouldDeleteProductTest(){
-        dummyClient
+        productClient
         .deleteProductById(VALID_ID)
         .statusCode(SC_OK);
     }
 
     @Test(description = "CT004.001")
     public void shouldListProductsTest(){
-        dummyClient
+        productClient
         .listAllProducts()
         .statusCode(SC_OK);
     }
 
     @Test(description = "CT006.002")
     public void shouldListProductByIdTest(){
-        dummyClient
+        productClient
         .listProductById(VALID_ID)
         .statusCode(SC_OK);
     }
 
     @Test(description = "CT006.002")
     public void updateValidProductTest() {
-        dummyClient
+        productClient
         .updateProductById()
         .statusCode(SC_OK);
     }

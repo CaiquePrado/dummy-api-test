@@ -11,7 +11,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test
     public void shouldCreateProductContractTest(){
-        dummyClient
+        productClient
         .createValidProduct()
         .statusCode(SC_CREATED)
         .body(matchesJsonSchema(new File(SCHEMAS + POST_PRODUCT_SCHEMA)));
@@ -19,7 +19,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test(description = "CT004.001")
     public void shouldDeleteProductContractTest(){
-        dummyClient
+        productClient
         .deleteProductById(VALID_ID)
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + DELETE_PRODUCT_SCHEMA)));
@@ -27,7 +27,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test(description = "CT004.001")
     public void shouldListProductsContractTest(){
-        dummyClient
+        productClient
         .listAllProducts()
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCTS_SCHEMA)));
@@ -35,7 +35,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test(description = "CT006.002")
     public void shouldListProductByIdContractTest(){
-        dummyClient
+        productClient
         .listProductById(VALID_ID)
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCT_SCHEMA)));
@@ -43,7 +43,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test(description = "CT006.002")
     public void updateValidProductContractTest(){
-        dummyClient
+        productClient
         .updateProductById()
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + PUT_PRODUCT_SCHEMA)));
@@ -51,7 +51,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test(description = "CT004.001")
     public void shouldNotDeleteProductContractTest(){
-        dummyClient
+        productClient
         .deleteProductById(INVALID_ID)
         .statusCode(SC_NOT_FOUND)
         .body(matchesJsonSchema(new File(SCHEMAS + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
@@ -59,7 +59,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test(description = "CT006.002")
     public void shouldNotListProductByIdContractTest(){
-        dummyClient
+        productClient
         .listProductById(INVALID_ID)
         .statusCode(SC_NOT_FOUND)
         .body(matchesJsonSchema(new File(SCHEMAS + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
@@ -67,7 +67,7 @@ public class ProductContractTest extends BaseTest {
 
     @Test
     public void shouldSearchProductByNameTest(){
-        dummyClient
+        productClient
         .searchProductByName(VALID_NAME)
         .statusCode(SC_OK)
         .body(matchesJsonSchema(new File(SCHEMAS + GET_SEARCH_PRODUCT_SCHEMA)));

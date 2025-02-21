@@ -10,11 +10,11 @@ import factory.ProductFactory;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
-public class DummyClient {
+public class ProductClient {
 
     private final RequestSpecification requestSpec;
 
-    public DummyClient(RequestSpecification requestSpec) {
+    public ProductClient(RequestSpecification requestSpec) {
         this.requestSpec = requestSpec;
     }
 
@@ -139,5 +139,4 @@ public class DummyClient {
         .get(String.format(HTTP_ORDER, order))
         .then();
     }
-
 }

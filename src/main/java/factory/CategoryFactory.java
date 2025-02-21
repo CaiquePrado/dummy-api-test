@@ -1,10 +1,10 @@
-package response;
+package factory;
 
 import dto.Category;
 
 import java.util.List;
 
-public interface CategoryResponse {
+public interface CategoryFactory {
 
     static List<Category> validCategoryResponse() {
         return List.of(

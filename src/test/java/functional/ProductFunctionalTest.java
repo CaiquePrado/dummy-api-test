@@ -30,7 +30,7 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "productFactory")
     public void shouldCreateProductWithOneAttributeTest(Product product){
-        dummyClient
+        productClient
         .createValidProductOneAttribute(product)
         .statusCode(SC_CREATED);
     }
@@ -46,7 +46,7 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "invalidIds")
     public void shouldNotDeleteProductByInvalidIdTest(String invalidId){
-        var expectedMessage = dummyClient
+        var expectedMessage = productClient
         .deleteProductById(invalidId)
         .statusCode(SC_NOT_FOUND)
         .extract()
@@ -59,7 +59,7 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "invalidIds")
     public void shouldNotFindProductByInvalidIdTest(String invalidId){
-        var expectedMessage = dummyClient
+        var expectedMessage = productClient
         .listProductById(invalidId)
         .statusCode(SC_NOT_FOUND)
         .extract()
@@ -81,7 +81,7 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "searchFactory")
     public void shouldSearchProductByNameTest(String search) {
-        dummyClient
+        productClient
         .searchProductByName(search)
         .statusCode(SC_OK);
     }
@@ -97,14 +97,14 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "limitFactory")
     public void shouldPaginateProductsTest(int limit){
-        dummyClient
+        productClient
         .searchProductsByPage(limit)
         .statusCode(SC_OK);
     }
 
     @Test
     public void shouldNotPaginateProductsTest(){
-        var expectedMessage = dummyClient
+        var expectedMessage = productClient
         .searchProductsByPage()
         .statusCode(SC_BAD_REQUEST)
         .extract()
@@ -124,14 +124,14 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "skipFactory")
     public void shouldSkipProductsTest(int skip){
-        dummyClient
+        productClient
         .skipProductsByPage(skip)
         .statusCode(SC_OK);
     }
 
     @Test
     public void shouldNotSkipProductsTest(){
-        var expectedMessage = dummyClient
+        var expectedMessage = productClient
         .skipProductsByPage()
         .statusCode(SC_BAD_REQUEST)
         .extract()
@@ -156,21 +156,21 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "selectFactory")
     public void shouldSelectProductsTest(String select){
-        dummyClient
+        productClient
         .selectProductByAttribute(select)
         .statusCode(SC_OK);
     }
 
     @Test
     public void shouldSelectSkipAndLimitProductsTest(){
-        dummyClient
+        productClient
         .selectLimitSkipProducts()
         .statusCode(SC_OK);
     }
 
     @Test
     public void shouldListCategoriesTest(){
-        dummyClient
+        productClient
         .listAllCategories()
         .statusCode(SC_OK);
 
@@ -208,7 +208,7 @@ public class ProductFunctionalTest extends BaseTest {
     }
     @Test(dataProvider = "categoriesFactory")
     public void shouldListProductsByCategoryTest(String category){
-        dummyClient
+        productClient
         .listProductsByCategory(category)
         .statusCode(SC_OK);
     }
@@ -223,7 +223,7 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "orderFactory")
     public void shouldListProductsOrderTest(String order){
-        dummyClient
+        productClient
         .listProductsByOrder(order)
         .statusCode(SC_OK);
     }
@@ -240,7 +240,7 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "invalidOrderFactory")
     public void shouldNotListProductsWithInvalidOrderTest(String order){
-        dummyClient
+        productClient
         .listProductsByOrder(order)
         .statusCode(SC_BAD_REQUEST);
     }

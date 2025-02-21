@@ -20,4 +20,9 @@ public class EndpointConstants {
     public static final String HTTP_200_CATEGORY = "/products/category-list";
     public static final String HTTP_200_PRODUCT_CATEGORY = "/products/category/%s";
     public static final String HTTP_ORDER = "/products?sortBy=title&order=%s";
+
+    public static final String HTTP_USER_201_CREATED = "/users/add";
+    public static final String HTTP_USER_200_DELETED = "/users/{id}";
+    public static final String HTTP_USER_200_LIST = "/users";
+    public static final String HTTP_USER_200_BY_ID = "/users/{id}";
 }

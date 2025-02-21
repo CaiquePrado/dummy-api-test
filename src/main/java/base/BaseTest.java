@@ -1,6 +1,7 @@
 package base;
 
-import client.DummyClient;
+import client.ProductClient;
+import client.UserClient;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -23,5 +24,6 @@ public class BaseTest {
             .addFilter(new RequestLoggingFilter())
             .build();
 
-    protected static DummyClient dummyClient = new DummyClient(spec);
+    protected static ProductClient productClient = new ProductClient(spec);
+    protected static UserClient userClient = new UserClient(spec);
 }

@@ -9,6 +9,7 @@ import lombok.Builder;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Product(
+        Long id,
         String title,
         String description,
         BigDecimal price,
