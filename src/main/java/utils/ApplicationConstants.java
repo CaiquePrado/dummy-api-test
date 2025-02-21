@@ -22,4 +22,10 @@ public class ApplicationConstants {
   public static final String PUT_PRODUCT_SCHEMA = "/PUT-product-contract.json";
   public static final String DELETE_GET_INVALID_PRODUCT_SCHEMA = "/GET-DELETE-invalid-product-contract.json";
   public static final String GET_SEARCH_PRODUCT_SCHEMA = "/GET-search-product-contract.json";
+
+  public static final String POST_USER_SCHEMA = "/POST-product-contract.json";
+  public static final String GET_USER_SCHEMA = "/GET-user-contract.json";
+  public static final String GET_USERS_SCHEMA = "/GET-users-contract.json";
+  public static final String DELETE_USER_SCHEMA = "/DELETE-user-contract.json";
+  public static final String PUT_USER_SCHEMA = "/PUT-user-contract.json";
 }
