@@ -1,83 +1,86 @@
 package factory;
 
-import java.math.BigDecimal;
-
 import dto.Product;
+import net.datafaker.Faker;
+
+import java.math.BigDecimal;
 
 public interface ProductFactory {
 
-    static Product validProductFactory(){
+    Faker faker = new Faker();
+
+    static Product validProductFactory() {
         return Product.builder()
-        .title("Perfume Oil")
-        .description("Mega Discount, Impression of A...")
-        .price(BigDecimal.valueOf(13))
-        .discountPercentage(8.4)
-        .rating(4.26)
-        .stock(65)
-        .brand("Impression of Acqua Di Gio")
-        .category("fragrances")
-        .thumbnail("https://i.dummyjson.com/data/products/11/thumnail.jpg")
-        .build();
+                .title(faker.commerce().productName())
+                .description(faker.commerce().material() + " - " + faker.commerce().promotionCode())
+                .price(BigDecimal.valueOf(Double.parseDouble(faker.commerce().price())))
+                .discountPercentage(faker.number().randomDouble(2, 5, 20))
+                .rating(faker.number().randomDouble(2, 3, 5))
+                .stock(faker.number().numberBetween(1, 100))
+                .brand(faker.company().name())
+                .category(faker.commerce().department())
+                .thumbnail(faker.internet().image())
+                .build();
     }
 
-    static Product validUpdateProductFactory(){
+    static Product validUpdateProductFactory() {
         return Product.builder()
-        .title("Perfume Oil")
-        .description("Mega Discount, Impression of A...")
-        .build();
+                .title(faker.commerce().productName())
+                .description(faker.lorem().sentence())
+                .build();
     }
 
     static Product createProductWithTitleFactory() {
         return Product.builder()
-        .title("Perfume Oil")
-        .build();
+                .title(faker.commerce().productName())
+                .build();
     }
 
     static Product createProductWithDescriptionFactory() {
         return Product.builder()
-        .description("Mega Discount, Impression of A...")
-        .build();
+                .description(faker.lorem().sentence())
+                .build();
     }
 
     static Product createProductWithPriceFactory() {
         return Product.builder()
-        .price(BigDecimal.valueOf(13))
-        .build();
+                .price(BigDecimal.valueOf(Double.parseDouble(faker.commerce().price())))
+                .build();
     }
 
     static Product createProductWithDiscountPercentageFactory() {
         return Product.builder()
-        .discountPercentage(8.4)
-        .build();
+                .discountPercentage(faker.number().randomDouble(2, 5, 20))
+                .build();
     }
 
     static Product createProductWithRatingFactory() {
         return Product.builder()
-        .rating(4.26)
-        .build();
+                .rating(faker.number().randomDouble(2, 1, 5))
+                .build();
     }
 
     static Product createProductWithStockFactory() {
         return Product.builder()
-        .stock(65)
-        .build();
+                .stock(faker.number().numberBetween(1, 100))
+                .build();
     }
 
     static Product createProductWithBrandFactory() {
         return Product.builder()
-        .brand("Impression of Acqua Di Gio")
-        .build();
+                .brand(faker.company().name())
+                .build();
     }
 
     static Product createProductWithCategoryFactory() {
         return Product.builder()
-        .category("fragrances")
-        .build();
+                .category(faker.commerce().department())
+                .build();
     }
 
     static Product createProductWithThumbnailFactory() {
         return Product.builder()
-        .thumbnail("https://i.dummyjson.com/data/products/11/thumnail.jpg")
-        .build();
+                .thumbnail(faker.internet().image())
+                .build();
     }
 }
