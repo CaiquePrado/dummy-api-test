@@ -2,77 +2,84 @@ package contract;
 
 import base.BaseTest;
 import org.testng.annotations.Test;
+
+import java.io.File;
+
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.apache.http.HttpStatus.*;
-import java.io.File;
 import static utils.ApplicationConstants.*;
 
 public class ProductContractTest extends BaseTest {
 
     @Test
-    public void shouldCreateProductContractTest(){
+    public void shouldCreateProductContractTest() {
         productClient
-        .createValidProduct()
-        .statusCode(SC_CREATED)
-        .body(matchesJsonSchema(new File(SCHEMAS + POST_PRODUCT_SCHEMA)));
+                .createValidProduct()
+                .statusCode(SC_CREATED)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + POST_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
-    public void shouldDeleteProductContractTest(){
+    public void shouldDeleteProductContractTest() {
         productClient
-        .deleteProductById(VALID_ID)
-        .statusCode(SC_OK)
-        .body(matchesJsonSchema(new File(SCHEMAS + DELETE_PRODUCT_SCHEMA)));
+                .deleteProductById(VALID_ID)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
-    public void shouldListProductsContractTest(){
+    public void shouldListProductsContractTest() {
         productClient
-        .listAllProducts()
-        .statusCode(SC_OK)
-        .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCTS_SCHEMA)));
+                .listAllProducts()
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_PRODUCTS_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
-    public void shouldListProductByIdContractTest(){
+    public void shouldListProductByIdContractTest() {
         productClient
-        .listProductById(VALID_ID)
-        .statusCode(SC_OK)
-        .body(matchesJsonSchema(new File(SCHEMAS + GET_PRODUCT_SCHEMA)));
+                .listProductById(VALID_ID)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
-    public void updateValidProductContractTest(){
+    public void updateValidProductContractTest() {
         productClient
-        .updateProductById()
-        .statusCode(SC_OK)
-        .body(matchesJsonSchema(new File(SCHEMAS + PUT_PRODUCT_SCHEMA)));
+                .updateProductById()
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + PUT_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
-    public void shouldNotDeleteProductContractTest(){
+    public void shouldNotDeleteProductContractTest() {
         productClient
-        .deleteProductById(INVALID_ID)
-        .statusCode(SC_NOT_FOUND)
-        .body(matchesJsonSchema(new File(SCHEMAS + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+                .deleteProductById(INVALID_ID)
+                .statusCode(SC_NOT_FOUND)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
-    public void shouldNotListProductByIdContractTest(){
+    public void shouldNotListProductByIdContractTest() {
         productClient
-        .listProductById(INVALID_ID)
-        .statusCode(SC_NOT_FOUND)
-        .body(matchesJsonSchema(new File(SCHEMAS + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+                .listProductById(INVALID_ID)
+                .statusCode(SC_NOT_FOUND)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
     @Test
-    public void shouldSearchProductByNameTest(){
+    public void shouldSearchProductByNameTest() {
         productClient
-        .searchProductByName(VALID_NAME)
-        .statusCode(SC_OK)
-        .body(matchesJsonSchema(new File(SCHEMAS + GET_SEARCH_PRODUCT_SCHEMA)));
+                .searchProductByName(VALID_NAME)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_SEARCH_PRODUCT_SCHEMA)));
     }
-    //TODO: teste com selected no parametro da url
-    //TODO: assert para teste category
 
+    @Test
+    public void shouldPaginateProductsTest() {
+        productClient
+                .searchProductsByPage(VALID_LIMIT)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_LIMIT_PRODUCT_SCHEMA)));
+    }
 }
