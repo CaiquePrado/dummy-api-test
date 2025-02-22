@@ -82,4 +82,28 @@ public class ProductContractTest extends BaseTest {
                 .statusCode(SC_OK)
                 .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_LIMIT_PRODUCT_SCHEMA)));
     }
+
+    @Test
+    public void shouldListProductsByCategoryTest() {
+        productClient
+                .listProductsByCategory(VALID_CATEGORY)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_CATEGORY_PRODUCT_SCHEMA)));
+    }
+
+    @Test
+    public void shouldListProductsOrderTest() {
+        productClient
+                .listProductsByOrder(VALID_ORDER)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_ORDER_PRODUCT_SCHEMA)));
+    }
+
+    @Test
+    public void shouldNotListProductsWithInvalidOrderTest() {
+        productClient
+                .listProductsByOrder(INVALID_ORDER)
+                .statusCode(SC_BAD_REQUEST)
+                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_INVALID_ORDER_PRODUCT_SCHEMA)));
+    }
 }
