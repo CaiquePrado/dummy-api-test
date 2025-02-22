@@ -1,17 +1,16 @@
 package healthcheck;
 
-import static org.apache.http.HttpStatus.SC_OK;
-
+import base.BaseTest;
 import org.testng.annotations.Test;
 
-import base.BaseTest;
+import static org.apache.http.HttpStatus.SC_OK;
 
 public class DummyHealthCheckTest extends BaseTest {
 
     @Test(description = "HealthCheckTest")
-    public void HealthCheckTest(){
+    public void HealthCheckTest() {
         productClient
-        .getHealth()
-        .statusCode(SC_OK);
+                .getHealth()
+                .statusCode(SC_OK);
     }
 }
