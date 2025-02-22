@@ -10,37 +10,37 @@ import static utils.ApplicationConstants.VALID_ID;
 public class UserSmokeTest extends BaseTest {
 
     @Test(description = "CT003.001")
-    public void shouldCreateUserTest(){
+    public void shouldCreateUserTest() {
         userClient
-        .createValidUser()
-        .statusCode(SC_CREATED);
+                .createValidUser()
+                .statusCode(SC_CREATED);
     }
 
     @Test(description = "CT004.001")
-    public void shouldDeleteUserTest(){
+    public void shouldDeleteUserTest() {
         userClient
-        .deleteUserById(VALID_ID)
-        .statusCode(SC_OK);
+                .deleteUserById(VALID_ID)
+                .statusCode(SC_OK);
     }
 
     @Test(description = "CT004.001")
-    public void shouldListUsersTest(){
+    public void shouldListUsersTest() {
         userClient
-        .listAllUsers()
-        .statusCode(SC_OK);
+                .listAllUsers()
+                .statusCode(SC_OK);
     }
 
     @Test(description = "CT006.002")
-    public void shouldListUserByIdTest(){
+    public void shouldListUserByIdTest() {
         userClient
-        .listUserById(VALID_ID)
-        .statusCode(SC_OK);
+                .listUserById(VALID_ID)
+                .statusCode(SC_OK);
     }
 
     @Test(description = "CT006.002")
     public void updateValidUserTest() {
         userClient
-        .updateUserById()
-        .statusCode(SC_OK);
+                .updateUserById()
+                .statusCode(SC_OK);
     }
 }
