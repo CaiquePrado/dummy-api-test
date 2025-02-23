@@ -2,10 +2,9 @@ package smoke;
 
 import base.BaseTest;
 import dto.Product;
-import factory.ProductFactory;
 import org.testng.annotations.Test;
 
-import static factory.ProductFactory.validUpdateProductFactory;
+import static factory.ProductFactory.*;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,7 +21,7 @@ public class ProductSmokeTest extends BaseTest {
                 .extract()
                 .as(Product.class);
 
-        assertThat(expectedProduct, is(ProductFactory.validProductFactory()));
+        assertThat(expectedProduct, is(validProductFactory()));
     }
 
     @Test(description = "CT004.001")
@@ -50,7 +49,7 @@ public class ProductSmokeTest extends BaseTest {
                 .extract()
                 .as(Product.class);
 
-        assertThat(expectedProduct, is(ProductFactory.idOneProductFactory()));
+        assertThat(expectedProduct, is(idOneProductFactory()));
     }
 
     @Test(description = "CT006.002")

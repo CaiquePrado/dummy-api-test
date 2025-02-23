@@ -1,22 +1,22 @@
 package dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record User(
-        Long id,
-        String firstName,
-        String lastName,
-        String maidenName,
-        Integer age,
-        String gender,
-        String email,
-        String phone,
-        String username,
-        String password,
-        String birthDate
+        @JsonProperty("firstName") String firstName,
+        @JsonProperty("lastName") String lastName,
+        @JsonProperty("maidenName") String maidenName,
+        @JsonProperty("age") Integer age,
+        @JsonProperty("gender") String gender,
+        @JsonProperty("email") String email,
+        @JsonProperty("phone") String phone,
+        @JsonProperty("username") String username,
+        @JsonProperty("password") String password,
+        @JsonProperty("birthDate") String birthDate
 ) {
 }
 
