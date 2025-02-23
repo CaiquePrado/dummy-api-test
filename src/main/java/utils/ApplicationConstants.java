@@ -36,4 +36,6 @@ public class ApplicationConstants {
     public static final String GET_USERS_SCHEMA = "/GET-users-contract.json";
     public static final String DELETE_USER_SCHEMA = "/DELETE-user-contract.json";
     public static final String PUT_USER_SCHEMA = "/PUT-user-contract.json";
+    public static final String GET_ORDER_USER_SCHEMA = "/GET-order-user-contract.json";
+    public static final String GET_LIMIT_USER_SCHEMA = "/GET-limit-user-contract.json";
 }
