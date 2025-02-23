@@ -5,12 +5,12 @@ import dto.Category;
 import dto.Message;
 import dto.Product;
 import factory.CategoryFactory;
-import factory.ProductFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 
+import static factory.ProductFactory.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -21,15 +21,15 @@ public class ProductFunctionalTest extends BaseTest {
     @DataProvider(name = "productFactory")
     public Object[][] productFactory() {
         return new Object[][]{
-                {ProductFactory.createProductWithTitleFactory()},
-                {ProductFactory.createProductWithDescriptionFactory()},
-                {ProductFactory.createProductWithPriceFactory()},
-                {ProductFactory.createProductWithDiscountPercentageFactory()},
-                {ProductFactory.createProductWithRatingFactory()},
-                {ProductFactory.createProductWithStockFactory()},
-                {ProductFactory.createProductWithBrandFactory()},
-                {ProductFactory.createProductWithCategoryFactory()},
-                {ProductFactory.createProductWithThumbnailFactory()}
+                {createProductWithTitleFactory()},
+                {createProductWithDescriptionFactory()},
+                {createProductWithPriceFactory()},
+                {createProductWithDiscountPercentageFactory()},
+                {createProductWithRatingFactory()},
+                {createProductWithStockFactory()},
+                {createProductWithBrandFactory()},
+                {createProductWithCategoryFactory()},
+                {createProductWithThumbnailFactory()}
         };
     }
 
@@ -265,7 +265,7 @@ public class ProductFunctionalTest extends BaseTest {
                 .statusCode(SC_BAD_REQUEST)
                 .extract()
                 .as(Message.class);
-        
+
         assertThat(expectedMessage.message(), is("Order can be: 'asc' or 'desc'"));
     }
 }

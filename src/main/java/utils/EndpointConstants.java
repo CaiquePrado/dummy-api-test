@@ -25,4 +25,12 @@ public class EndpointConstants {
     public static final String HTTP_USER_200_DELETED = "/users/{id}";
     public static final String HTTP_USER_200_LIST = "/users";
     public static final String HTTP_USER_200_BY_ID = "/users/{id}";
+    public static final String HTTP_USER_ORDER = "/users?sortBy=firstname&order=%s";
+    public static final String HTTP_200_USER_LIMIT_SKIP_SELECT = "/users?limit=%d&skip=%d&select=%s";
+    public static final String HTTP_USER_200_SELECT = "/users?select=%s";
+    public static final String HTTP_USER_400_SKIP = "/users?skip=''";
+    public static final String HTTP_USER_200_SKIP = "/users?skip=%d";
+    public static final String HTTP_USER_400_LIMIT = "/users?limit=''";
+    public static final String HTTP_USER_200_LIMIT = "/users?limit=%d";
+    public static final String HTTP_USER_200_SEARCH = "/users/search?q=%s";
 }
