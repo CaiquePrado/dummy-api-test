@@ -4,6 +4,7 @@ import dto.Product;
 import net.datafaker.Faker;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface ProductFactory {
 
@@ -11,22 +12,23 @@ public interface ProductFactory {
 
     static Product validProductFactory() {
         return Product.builder()
-                .title(faker.commerce().productName())
-                .description(faker.commerce().material() + " - " + faker.commerce().promotionCode())
-                .price(BigDecimal.valueOf(Double.parseDouble(faker.commerce().price())))
-                .discountPercentage(faker.number().randomDouble(2, 5, 20))
-                .rating(faker.number().randomDouble(2, 3, 5))
-                .stock(faker.number().numberBetween(1, 100))
-                .brand(faker.company().name())
-                .category(faker.commerce().department())
-                .thumbnail(faker.internet().image())
+                .title("Perfume Oil")
+                .description("Mega Discount, Impression of A...")
+                .price(BigDecimal.valueOf(13))
+                .discountPercentage(8.4)
+                .rating(4.26)
+                .stock(65)
+                .brand("Impression of Acqua Di Gio")
+                .category("fragrances")
+                .thumbnail("https://i.dummyjson.com/data/products/11/thumnail.jpg")
                 .build();
     }
 
+
     static Product validUpdateProductFactory() {
         return Product.builder()
-                .title(faker.commerce().productName())
-                .description(faker.lorem().sentence())
+                .title("iPhone Galaxy +1")
+                .description("Good smartphone")
                 .build();
     }
 
@@ -81,6 +83,21 @@ public interface ProductFactory {
     static Product createProductWithThumbnailFactory() {
         return Product.builder()
                 .thumbnail(faker.internet().image())
+                .build();
+    }
+
+    static Product idOneProductFactory() {
+        return Product.builder()
+                .title("Essence Mascara Lash Princess")
+                .description("The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.")
+                .price(BigDecimal.valueOf(9.99))
+                .discountPercentage(7.17)
+                .rating(4.94)
+                .stock(5)
+                .brand("Essence")
+                .category("beauty")
+                .thumbnail("https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png")
+                .images(List.of("https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"))
                 .build();
     }
 }

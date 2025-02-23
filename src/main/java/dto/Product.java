@@ -1,23 +1,25 @@
 package dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
 
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Product(
-        Long id,
-        String title,
-        String description,
-        BigDecimal price,
-        Double discountPercentage,
-        Double rating,
-        Integer stock,
-        String brand,
-        String category,
-        String thumbnail,
-        List<String> images
-) {}
+        @JsonProperty("title") String title,
+        @JsonProperty("description") String description,
+        @JsonProperty("price") BigDecimal price,
+        @JsonProperty("discountPercentage") Double discountPercentage,
+        @JsonProperty("rating") Double rating,
+        @JsonProperty("stock") Integer stock,
+        @JsonProperty("brand") String brand,
+        @JsonProperty("category") String category,
+        @JsonProperty("thumbnail") String thumbnail,
+        @JsonProperty("images") List<String> images
+) {
+}
+

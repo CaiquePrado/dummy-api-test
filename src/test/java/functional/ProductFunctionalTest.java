@@ -1,15 +1,20 @@
 package functional;
 
 import base.BaseTest;
+import dto.Category;
 import dto.Message;
 import dto.Product;
+import factory.CategoryFactory;
 import factory.ProductFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+
 
 public class ProductFunctionalTest extends BaseTest {
 
@@ -83,7 +88,8 @@ public class ProductFunctionalTest extends BaseTest {
     public void shouldSearchProductByNameTest(String search) {
         productClient
                 .searchProductByName(search)
-                .statusCode(SC_OK);
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0));
     }
 
     @DataProvider(name = "limitFactory")
@@ -99,7 +105,9 @@ public class ProductFunctionalTest extends BaseTest {
     public void shouldPaginateProductsTest(int limit) {
         productClient
                 .searchProductsByPage(limit)
-                .statusCode(SC_OK);
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0))
+                .body("limit", notNullValue());
     }
 
     @Test
@@ -117,8 +125,8 @@ public class ProductFunctionalTest extends BaseTest {
     public Object[][] skipFactory() {
         return new Object[][]{
                 {10},
-                {100},
-                {1000}
+                {50},
+                {100}
         };
     }
 
@@ -126,7 +134,9 @@ public class ProductFunctionalTest extends BaseTest {
     public void shouldSkipProductsTest(int skip) {
         productClient
                 .skipProductsByPage(skip)
-                .statusCode(SC_OK);
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0))
+                .body("skip", notNullValue());
     }
 
     @Test
@@ -158,22 +168,30 @@ public class ProductFunctionalTest extends BaseTest {
     public void shouldSelectProductsTest(String select) {
         productClient
                 .selectProductByAttribute(select)
-                .statusCode(SC_OK);
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0));
     }
 
     @Test
     public void shouldSelectSkipAndLimitProductsTest() {
         productClient
                 .selectLimitSkipProducts()
-                .statusCode(SC_OK);
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0))
+                .body("skip", notNullValue())
+                .body("limit", notNullValue());
     }
 
     @Test
     public void shouldListCategoriesTest() {
-        productClient
+        var categoriesList = productClient
                 .listAllCategories()
-                .statusCode(SC_OK);
-        
+                .statusCode(SC_OK)
+                .extract()
+                .as(Category[].class);
+
+        assertThat(Arrays.asList(categoriesList), is(CategoryFactory.validCategoryResponse()));
+
     }
 
     @DataProvider(name = "categoriesFactory")
@@ -210,7 +228,8 @@ public class ProductFunctionalTest extends BaseTest {
     public void shouldListProductsByCategoryTest(String category) {
         productClient
                 .listProductsByCategory(category)
-                .statusCode(SC_OK);
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0));
     }
 
     @DataProvider(name = "orderFactory")
@@ -225,7 +244,8 @@ public class ProductFunctionalTest extends BaseTest {
     public void shouldListProductsOrderTest(String order) {
         productClient
                 .listProductsByOrder(order)
-                .statusCode(SC_OK);
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0));
     }
 
     @DataProvider(name = "invalidOrderFactory")
@@ -240,8 +260,12 @@ public class ProductFunctionalTest extends BaseTest {
 
     @Test(dataProvider = "invalidOrderFactory")
     public void shouldNotListProductsWithInvalidOrderTest(String order) {
-        productClient
+        var expectedMessage = productClient
                 .listProductsByOrder(order)
-                .statusCode(SC_BAD_REQUEST);
+                .statusCode(SC_BAD_REQUEST)
+                .extract()
+                .as(Message.class);
+        
+        assertThat(expectedMessage.message(), is("Order can be: 'asc' or 'desc'"));
     }
 }
