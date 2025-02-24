@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   healthcheck:
     name: Health Check
@@ -20,6 +19,12 @@ jobs:
 
       - name: Health Check
         run: gradle clean test --tests 'DummyHealthCheckTest'
+
+      - name: Upload HealthCheck Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: HealthCheck-ExtentReport
+          path: build/reports/tests/test/index.html
 
   smoke:
     name: Smoke
@@ -34,6 +39,12 @@ jobs:
       - name: Smoke Test
         run: gradle clean test --tests 'ProductSmokeTest' --tests 'UserSmokeTest'
 
+      - name: Upload Smoke Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Smoke-ExtentReport
+          path: build/reports/tests/test/index.html
+
   contract:
     name: Contract
     runs-on: ubuntu-24.04
@@ -47,6 +58,12 @@ jobs:
       - name: Contract Test
         run: gradle clean test --tests 'ProductContractTest' --tests 'UserContractTest'
 
+      - name: Upload Contract Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Contract-ExtentReport
+          path: build/reports/tests/test/index.html
+
   functional:
     name: Functional
     runs-on: ubuntu-24.04
@@ -59,3 +76,9 @@ jobs:
 
       - name: Functional Test
         run: gradle clean test --tests 'ProductFunctionalTest'
+
+      - name: Upload Functional Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Functional-ExtentReport
+          path: build/reports/tests/test/index.html
