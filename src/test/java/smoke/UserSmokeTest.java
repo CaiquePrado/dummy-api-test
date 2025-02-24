@@ -55,7 +55,7 @@ public class UserSmokeTest extends BaseTest {
     @Test(description = "CT006.002")
     public void updateValidUserTest() {
         var expectedUser = userClient
-                .updateUserById()
+                .updateUserById(VALID_ID)
                 .statusCode(SC_OK)
                 .extract()
                 .as(User.class);

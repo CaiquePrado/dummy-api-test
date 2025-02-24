@@ -32,7 +32,7 @@ public class UserFunctionalTest extends BaseTest {
     @Test(dataProvider = "userFactory")
     public void shouldCreateUserWithOneAttributeTest(User user) {
         userClient
-                .createValidUserOneAttribute(user)
+                .createUserWithAttributes(user)
                 .statusCode(SC_CREATED);
     }
 
@@ -43,6 +43,19 @@ public class UserFunctionalTest extends BaseTest {
                 {"invalid-id"},
                 {"!@#$%"}
         };
+    }
+
+    @Test(dataProvider = "invalidIds")
+    public void shouldNotUpdateUserByInvalidIdTest(String invalidId) {
+        var expectedMessage = userClient
+                .updateUserById(invalidId)
+                .statusCode(SC_BAD_REQUEST)
+                .extract()
+                .as(Message.class);
+
+        String expectedErrorMessage = String.format("Invalid user id '%s'", invalidId);
+
+        assertThat(expectedMessage.message(), is(expectedErrorMessage));
     }
 
     @Test(dataProvider = "invalidIds")

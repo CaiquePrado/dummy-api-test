@@ -55,7 +55,7 @@ public class ProductSmokeTest extends BaseTest {
     @Test(description = "CT006.002")
     public void updateValidProductTest() {
         var expectedProduct = productClient
-                .updateProductById()
+                .updateProductById(VALID_ID)
                 .statusCode(SC_OK)
                 .extract()
                 .as(Product.class);

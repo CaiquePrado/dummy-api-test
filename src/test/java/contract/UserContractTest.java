@@ -16,7 +16,7 @@ public class UserContractTest extends BaseTest {
         userClient
                 .createValidUser()
                 .statusCode(SC_CREATED)
-                .body(matchesJsonSchema(new File(SCHEMAS_USER + POST_USER_SCHEMA)));
+                .body(matchesJsonSchema(new File(POST_USER_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
@@ -24,7 +24,7 @@ public class UserContractTest extends BaseTest {
         userClient
                 .deleteUserById(VALID_ID)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_USER + DELETE_USER_SCHEMA)));
+                .body(matchesJsonSchema(new File(DELETE_USER_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
@@ -32,7 +32,7 @@ public class UserContractTest extends BaseTest {
         userClient
                 .listAllUsers()
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_USER + GET_USERS_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_USERS_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
@@ -40,15 +40,15 @@ public class UserContractTest extends BaseTest {
         userClient
                 .listUserById(VALID_ID)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_USER + GET_USER_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_USER_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
     public void updateValidUserContractTest() {
         userClient
-                .updateUserById()
+                .updateUserById(VALID_ID)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_USER + PUT_USER_SCHEMA)));
+                .body(matchesJsonSchema(new File(PUT_USER_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
@@ -56,7 +56,7 @@ public class UserContractTest extends BaseTest {
         userClient
                 .deleteUserById(INVALID_ID)
                 .statusCode(SC_BAD_REQUEST)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
@@ -64,7 +64,7 @@ public class UserContractTest extends BaseTest {
         userClient
                 .listUserById(INVALID_ID)
                 .statusCode(SC_BAD_REQUEST)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class UserContractTest extends BaseTest {
         userClient
                 .searchUsersByPage(VALID_LIMIT)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_USER + GET_LIMIT_USER_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_LIMIT_USER_SCHEMA)));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class UserContractTest extends BaseTest {
         userClient
                 .listUsersByOrder(VALID_ORDER)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_USER + GET_ORDER_USER_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_ORDER_USER_SCHEMA)));
     }
 
     @Test
@@ -88,6 +88,6 @@ public class UserContractTest extends BaseTest {
         userClient
                 .listUsersByOrder(INVALID_ORDER)
                 .statusCode(SC_BAD_REQUEST)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_INVALID_ORDER_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_INVALID_ORDER_PRODUCT_SCHEMA)));
     }
 }

@@ -5,32 +5,40 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EndpointConstants {
-    public static final String HTTP_200_UP = "http/200/UP";
-    public static final String HTTP_201_CREATED = "/products/add";
-    public static final String HTTP_200_DELETED = "/products/{id}";
-    public static final String HTTP_200_LIST = "/products";
-    public static final String HTTP_200_BY_ID = "/products/{id}";
-    public static final String HTTP_200_SEARCH = "/products/search?q=%s";
-    public static final String HTTP_200_LIMIT = "/products?limit=%d";
-    public static final String HTTP_400_LIMIT = "/products?limit=''";
-    public static final String HTTP_200_SKIP = "/products?skip=%d";
-    public static final String HTTP_400_SKIP = "/products?skip=''";
-    public static final String HTTP_200_SELECT = "/products?select=%s";
-    public static final String HTTP_200_LIMIT_SKIP_SELECT = "/products?limit=%d&skip=%d&select=%s";
-    public static final String HTTP_200_CATEGORY = "/products/category-list";
-    public static final String HTTP_200_PRODUCT_CATEGORY = "/products/category/%s";
-    public static final String HTTP_ORDER = "/products?sortBy=title&order=%s";
+    
+    private static final String PRODUCTS_BASE = "/products";
+    private static final String USERS_BASE = "/users";
+    private static final String ID_PATH = "/{id}";
 
-    public static final String HTTP_USER_201_CREATED = "/users/add";
-    public static final String HTTP_USER_200_DELETED = "/users/{id}";
-    public static final String HTTP_USER_200_LIST = "/users";
-    public static final String HTTP_USER_200_BY_ID = "/users/{id}";
-    public static final String HTTP_USER_ORDER = "/users?sortBy=firstname&order=%s";
-    public static final String HTTP_200_USER_LIMIT_SKIP_SELECT = "/users?limit=%d&skip=%d&select=%s";
-    public static final String HTTP_USER_200_SELECT = "/users?select=%s";
-    public static final String HTTP_USER_400_SKIP = "/users?skip=''";
-    public static final String HTTP_USER_200_SKIP = "/users?skip=%d";
-    public static final String HTTP_USER_400_LIMIT = "/users?limit=''";
-    public static final String HTTP_USER_200_LIMIT = "/users?limit=%d";
-    public static final String HTTP_USER_200_SEARCH = "/users/search?q=%s";
+    private static final String LIMIT_PARAM = "?limit=%d";
+    private static final String SKIP_PARAM = "?skip=%d";
+    private static final String SELECT_PARAM = "?select=%s";
+    private static final String SEARCH_PARAM = "/search?q=%s";
+
+    public static final String PRODUCT_STATUS = "http/200/UP";
+    public static final String PRODUCT_CREATE = PRODUCTS_BASE + "/add";
+    public static final String PRODUCT_LIST = PRODUCTS_BASE;
+    public static final String PRODUCT_BY_ID = PRODUCTS_BASE + ID_PATH;
+    public static final String PRODUCT_SEARCH = PRODUCTS_BASE + SEARCH_PARAM;
+    public static final String PRODUCT_LIMIT = PRODUCTS_BASE + LIMIT_PARAM;
+    public static final String PRODUCT_LIMIT_INVALID = PRODUCTS_BASE + "?limit=''";
+    public static final String PRODUCT_SKIP = PRODUCTS_BASE + SKIP_PARAM;
+    public static final String PRODUCT_SKIP_INVALID = PRODUCTS_BASE + "?skip=''";
+    public static final String PRODUCT_SELECT = PRODUCTS_BASE + SELECT_PARAM;
+    public static final String PRODUCT_LIST_PAGINATED = PRODUCTS_BASE + "?limit=%d&skip=%d&select=%s";
+    public static final String PRODUCT_CATEGORIES = PRODUCTS_BASE + "/category-list";
+    public static final String PRODUCT_BY_CATEGORY = PRODUCTS_BASE + "/category/%s";
+    public static final String PRODUCT_SORT = PRODUCTS_BASE + "?sortBy=title&order=%s";
+
+    public static final String USER_CREATE = USERS_BASE + "/add";
+    public static final String USER_DELETE = USERS_BASE + ID_PATH;
+    public static final String USER_LIST = USERS_BASE;
+    public static final String USER_BY_ID = USERS_BASE + ID_PATH;
+    public static final String USER_SORT = USERS_BASE + "?sortBy=firstname&order=%s";
+    public static final String USER_LIST_PAGINATED = USERS_BASE + "?limit=%d&skip=%d&select=%s";
+    public static final String USER_SELECT = USERS_BASE + SELECT_PARAM;
+    public static final String USER_SKIP = USERS_BASE + SKIP_PARAM;
+    public static final String USER_SKIP_INVALID = USERS_BASE + "?skip=''";
+    public static final String USER_LIMIT = USERS_BASE + LIMIT_PARAM;
+    public static final String USER_LIMIT_INVALID = USERS_BASE + "?limit=''";
 }

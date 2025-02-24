@@ -1,14 +1,13 @@
 package client;
 
-import static io.restassured.RestAssured.given;
-import static utils.ApplicationConstants.VALID_ID;
-import static utils.ApplicationConstants.*;
-import static utils.EndpointConstants.*;
-
 import dto.Product;
 import factory.ProductFactory;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+
+import static io.restassured.RestAssured.given;
+import static utils.ApplicationConstants.*;
+import static utils.EndpointConstants.*;
 
 public class ProductClient {
 
@@ -18,125 +17,102 @@ public class ProductClient {
         this.requestSpec = requestSpec;
     }
 
-    public ValidatableResponse getHealth(){
+    public ValidatableResponse getHealth() {
+        return executeGetRequest(PRODUCT_STATUS);
+    }
+
+    public ValidatableResponse createValidProduct() {
+        return createProduct(ProductFactory.validProductFactory());
+    }
+
+    public ValidatableResponse deleteProductById(String productId) {
+        return executeDeleteRequest(productId);
+    }
+
+    public ValidatableResponse listAllProducts() {
+        return executeGetRequest(PRODUCT_LIST);
+    }
+
+    public ValidatableResponse listProductById(String productId) {
+        return executeGetRequest(PRODUCT_BY_ID, productId);
+    }
+
+    public ValidatableResponse updateProductById(String productId) {
+        return executePutRequest(ProductFactory.validUpdateProductFactory(), productId);
+    }
+
+    public ValidatableResponse createProductWithAttributes(Product product) {
+        return createProduct(product);
+    }
+
+    public ValidatableResponse searchProductByName(String search) {
+        return executeGetRequest(String.format(PRODUCT_SEARCH, search));
+    }
+
+    public ValidatableResponse searchProductsByPage(int limit) {
+        return executeGetRequest(String.format(PRODUCT_LIMIT, limit));
+    }
+
+    public ValidatableResponse searchProductsByPage() {
+        return executeGetRequest(PRODUCT_LIMIT_INVALID);
+    }
+
+    public ValidatableResponse skipProductsByPage() {
+        return executeGetRequest(PRODUCT_SKIP_INVALID);
+    }
+
+    public ValidatableResponse skipProductsByPage(int skip) {
+        return executeGetRequest(String.format(PRODUCT_SKIP, skip));
+    }
+
+    public ValidatableResponse selectProductByAttribute(String attribute) {
+        return executeGetRequest(String.format(PRODUCT_SELECT, attribute));
+    }
+
+    public ValidatableResponse selectLimitSkipProducts() {
+        return executeGetRequest(String.format(PRODUCT_LIST_PAGINATED, VALID_LIMIT, VALID_SKIP, VALID_SELECT));
+    }
+
+    public ValidatableResponse listAllCategories() {
+        return executeGetRequest(PRODUCT_CATEGORIES);
+    }
+
+    public ValidatableResponse listProductsByCategory(String category) {
+        return executeGetRequest(String.format(PRODUCT_BY_CATEGORY, category));
+    }
+
+    public ValidatableResponse listProductsByOrder(String order) {
+        return executeGetRequest(String.format(PRODUCT_SORT, order));
+    }
+
+    // Private helper methods
+    private ValidatableResponse createProduct(Object body) {
         return given().spec(requestSpec)
-        .when()
-        .get(HTTP_200_UP)
-        .then();
+                .body(body)
+                .when()
+                .post(PRODUCT_CREATE)
+                .then();
     }
 
-    public ValidatableResponse createValidProduct(){
+    private ValidatableResponse executeDeleteRequest(Object... pathParams) {
         return given().spec(requestSpec)
-        .body(ProductFactory.validProductFactory())
-        .when()
-        .post(HTTP_201_CREATED)
-        .then();
+                .when()
+                .delete(PRODUCT_BY_ID, pathParams)
+                .then();
     }
 
-    public ValidatableResponse deleteProductById(String productId){
+    private ValidatableResponse executeGetRequest(String endpoint, Object... pathParams) {
         return given().spec(requestSpec)
-        .when()
-        .delete(HTTP_200_DELETED,productId)
-        .then();
+                .when()
+                .get(endpoint, pathParams)
+                .then();
     }
 
-    public ValidatableResponse listAllProducts(){
+    private ValidatableResponse executePutRequest(Object body, Object... pathParams) {
         return given().spec(requestSpec)
-        .when()
-        .get(HTTP_200_LIST)
-        .then();
-    }
-
-    public ValidatableResponse listProductById(String productId){
-        return given().spec(requestSpec)
-        .when()
-        .get(HTTP_200_BY_ID, productId)
-        .then();
-    }
-
-    public ValidatableResponse updateProductById(){
-        return given().spec(requestSpec)
-        .body(ProductFactory.validUpdateProductFactory())
-        .when()
-        .put(HTTP_200_BY_ID, VALID_ID)
-        .then();
-    }
-
-    public ValidatableResponse createValidProductOneAttribute(Product product){
-        return given().spec(requestSpec)
-        .body(product)
-        .when()
-        .post(HTTP_201_CREATED)
-        .then();
-    }
-
-    public ValidatableResponse searchProductByName(String search){
-        return given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_200_SEARCH, search))
-        .then();
-    }
-
-    public ValidatableResponse searchProductsByPage(int limit){
-        return  given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_200_LIMIT, limit))
-        .then();
-    }
-
-    public ValidatableResponse searchProductsByPage(){
-        return  given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_400_LIMIT))
-        .then();
-    }
-
-    public ValidatableResponse skipProductsByPage(){
-        return  given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_400_SKIP))
-        .then();
-    }
-
-    public ValidatableResponse skipProductsByPage(int skip){
-        return  given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_200_SKIP, skip))
-        .then();
-    }
-
-    public ValidatableResponse selectProductByAttribute(String attribute){
-        return given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_200_SELECT, attribute))
-        .then();
-    }
-
-    public ValidatableResponse selectLimitSkipProducts ( ){
-        return given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_200_LIMIT_SKIP_SELECT,VALID_LIMIT, VALID_SKIP, VALID_SELECT))
-        .then();
-    }
-
-    public ValidatableResponse listAllCategories(){
-        return given().spec(requestSpec)
-        .when()
-        .get(HTTP_200_CATEGORY)
-        .then();
-    }
-
-    public ValidatableResponse listProductsByCategory(String category){
-        return given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_200_PRODUCT_CATEGORY, category))
-        .then();
-    }
-
-    public ValidatableResponse listProductsByOrder(String order){
-        return given().spec(requestSpec)
-        .when()
-        .get(String.format(HTTP_ORDER, order))
-        .then();
+                .body(body)
+                .when()
+                .put(PRODUCT_BY_ID, pathParams)
+                .then();
     }
 }

@@ -16,7 +16,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .createValidProduct()
                 .statusCode(SC_CREATED)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + POST_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(POST_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
@@ -24,7 +24,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .deleteProductById(VALID_ID)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(DELETE_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
@@ -32,7 +32,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .listAllProducts()
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_PRODUCTS_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_PRODUCTS_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
@@ -40,15 +40,15 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .listProductById(VALID_ID)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
     public void updateValidProductContractTest() {
         productClient
-                .updateProductById()
+                .updateProductById(VALID_ID)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + PUT_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(PUT_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT004.001")
@@ -56,7 +56,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .deleteProductById(INVALID_ID)
                 .statusCode(SC_NOT_FOUND)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
     @Test(description = "CT006.002")
@@ -64,7 +64,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .listProductById(INVALID_ID)
                 .statusCode(SC_NOT_FOUND)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .searchProductByName(VALID_NAME)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_SEARCH_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_SEARCH_PRODUCT_SCHEMA)));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .searchProductsByPage(VALID_LIMIT)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_LIMIT_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_LIMIT_PRODUCT_SCHEMA)));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .listProductsByCategory(VALID_CATEGORY)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_CATEGORY_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_CATEGORY_PRODUCT_SCHEMA)));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .listProductsByOrder(VALID_ORDER)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_ORDER_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_ORDER_PRODUCT_SCHEMA)));
     }
 
     @Test
@@ -104,6 +104,6 @@ public class ProductContractTest extends BaseTest {
         productClient
                 .listProductsByOrder(INVALID_ORDER)
                 .statusCode(SC_BAD_REQUEST)
-                .body(matchesJsonSchema(new File(SCHEMAS_PRODUCT + GET_INVALID_ORDER_PRODUCT_SCHEMA)));
+                .body(matchesJsonSchema(new File(GET_INVALID_ORDER_PRODUCT_SCHEMA)));
     }
 }

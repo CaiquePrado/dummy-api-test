@@ -18,104 +18,84 @@ public class UserClient {
     }
 
     public ValidatableResponse createValidUser() {
-        return given().spec(requestSpec)
-                .body(UserFactory.createValidUserFactory())
-                .when()
-                .post(HTTP_USER_201_CREATED)
-                .then();
+        return createUser(UserFactory.createValidUserFactory());
     }
 
-    public ValidatableResponse createValidUserOneAttribute(User user) {
-        return given().spec(requestSpec)
-                .body(user)
-                .when()
-                .post(HTTP_201_CREATED)
-                .then();
+    public ValidatableResponse createUserWithAttributes(User user) {
+        return createUser(user);
     }
 
     public ValidatableResponse deleteUserById(String userId) {
-        return given().spec(requestSpec)
-                .when()
-                .delete(HTTP_USER_200_DELETED, userId)
-                .then();
+        return executeDeleteRequest(userId);
     }
 
     public ValidatableResponse listAllUsers() {
-        return given().spec(requestSpec)
-                .when()
-                .get(HTTP_USER_200_LIST)
-                .then();
+        return executeGetRequest(USER_LIST);
     }
 
     public ValidatableResponse listUserById(String userId) {
-        return given().spec(requestSpec)
-                .when()
-                .get(HTTP_USER_200_BY_ID, userId)
-                .then();
-    }
-
-    public ValidatableResponse searchUserByName(String search) {
-        return given().spec(requestSpec)
-                .when()
-                .get(String.format(HTTP_USER_200_SEARCH, search))
-                .then();
+        return executeGetRequest(USER_BY_ID, userId);
     }
 
     public ValidatableResponse searchUsersByPage(int limit) {
-        return given().spec(requestSpec)
-                .when()
-                .get(String.format(HTTP_USER_200_LIMIT, limit))
-                .then();
+        return executeGetRequest(String.format(USER_LIMIT, limit));
     }
 
     public ValidatableResponse searchUsersByPage() {
-        return given().spec(requestSpec)
-                .when()
-                .get(String.format(HTTP_USER_400_LIMIT))
-                .then();
+        return executeGetRequest(USER_LIMIT_INVALID);
     }
 
     public ValidatableResponse skipUsersByPage() {
-        return given().spec(requestSpec)
-                .when()
-                .get(String.format(HTTP_USER_400_SKIP))
-                .then();
+        return executeGetRequest(USER_SKIP_INVALID);
     }
 
     public ValidatableResponse skipUsersByPage(int skip) {
-        return given().spec(requestSpec)
-                .when()
-                .get(String.format(HTTP_USER_200_SKIP, skip))
-                .then();
+        return executeGetRequest(String.format(USER_SKIP, skip));
     }
 
     public ValidatableResponse selectUserByAttribute(String attribute) {
-        return given().spec(requestSpec)
-                .when()
-                .get(String.format(HTTP_USER_200_SELECT, attribute))
-                .then();
+        return executeGetRequest(String.format(USER_SELECT, attribute));
     }
 
     public ValidatableResponse selectLimitSkipUsers() {
-        return given().spec(requestSpec)
-                .when()
-                .get(String.format(HTTP_200_USER_LIMIT_SKIP_SELECT, VALID_LIMIT, VALID_SKIP, VALID_SELECT))
-                .then();
+        return executeGetRequest(String.format(USER_LIST_PAGINATED, VALID_LIMIT, VALID_SKIP, VALID_SELECT));
     }
 
-    public ValidatableResponse updateUserById() {
-        return given().spec(requestSpec)
-                .body(UserFactory.validUpdateUserFactory())
-                .when()
-                .put(HTTP_USER_200_BY_ID, VALID_ID)
-                .then();
+    public ValidatableResponse updateUserById(String userId) {
+        return executePutRequest(UserFactory.validUpdateUserFactory(), userId);
     }
 
     public ValidatableResponse listUsersByOrder(String order) {
+        return executeGetRequest(String.format(USER_SORT, order));
+    }
+
+    private ValidatableResponse createUser(Object body) {
         return given().spec(requestSpec)
+                .body(body)
                 .when()
-                .get(String.format(HTTP_USER_ORDER, order))
+                .post(USER_CREATE)
                 .then();
     }
 
+    private ValidatableResponse executeDeleteRequest(Object... pathParams) {
+        return given().spec(requestSpec)
+                .when()
+                .delete(USER_DELETE, pathParams)
+                .then();
+    }
+
+    private ValidatableResponse executeGetRequest(String endpoint, Object... pathParams) {
+        return given().spec(requestSpec)
+                .when()
+                .get(endpoint, pathParams)
+                .then();
+    }
+
+    private ValidatableResponse executePutRequest(Object body, Object... pathParams) {
+        return given().spec(requestSpec)
+                .body(body)
+                .when()
+                .put(USER_BY_ID, pathParams)
+                .then();
+    }
 }

@@ -36,7 +36,7 @@ public class ProductFunctionalTest extends BaseTest {
     @Test(dataProvider = "productFactory")
     public void shouldCreateProductWithOneAttributeTest(Product product) {
         productClient
-                .createValidProductOneAttribute(product)
+                .createProductWithAttributes(product)
                 .statusCode(SC_CREATED);
     }
 
@@ -47,6 +47,19 @@ public class ProductFunctionalTest extends BaseTest {
                 {"invalid-id"},
                 {"!@#$%"}
         };
+    }
+
+    @Test(dataProvider = "invalidIds")
+    public void shouldNotUpdateProductByInvalidIdTest(String invalidId) {
+        var expectedMessage = productClient
+                .updateProductById(invalidId)
+                .statusCode(SC_NOT_FOUND)
+                .extract()
+                .as(Message.class);
+
+        String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
+
+        assertThat(expectedMessage.message(), is(expectedErrorMessage));
     }
 
     @Test(dataProvider = "invalidIds")
