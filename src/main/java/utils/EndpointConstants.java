@@ -5,10 +5,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EndpointConstants {
-    
+
     private static final String PRODUCTS_BASE = "/products";
     private static final String USERS_BASE = "/users";
     private static final String ID_PATH = "/{id}";
+    public static final String USER_LOGIN = "/auth/login";
 
     private static final String LIMIT_PARAM = "?limit=%d";
     private static final String SKIP_PARAM = "?skip=%d";

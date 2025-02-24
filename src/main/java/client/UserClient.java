@@ -98,4 +98,12 @@ public class UserClient {
                 .put(USER_BY_ID, pathParams)
                 .then();
     }
+
+    public ValidatableResponse login(User user) {
+        return given().spec(requestSpec)
+                .body(user)
+                .when()
+                .post(USER_LOGIN)
+                .then();
+    }
 }

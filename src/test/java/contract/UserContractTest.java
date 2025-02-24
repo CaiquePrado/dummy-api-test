@@ -5,11 +5,29 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 
+import static factory.UserFactory.invalidLoginFactory;
+import static factory.UserFactory.validLoginFactory;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.apache.http.HttpStatus.*;
 import static utils.ApplicationConstants.*;
 
 public class UserContractTest extends BaseTest {
+
+    @Test
+    public void shouldLoginUserContractTest() {
+        userClient
+                .login(validLoginFactory())
+                .statusCode(SC_OK)
+                .body(matchesJsonSchema(new File(POST_LOGIN_SCHEMA)));
+    }
+
+    @Test
+    public void shouldNotLoginUserWithInvalidCredentialsContractTest() {
+        userClient
+                .login(invalidLoginFactory())
+                .statusCode(SC_BAD_REQUEST)
+                .body(matchesJsonSchema(new File(POST_INVALID_LOGIN_SCHEMA)));
+    }
 
     @Test
     public void shouldCreateUserContractTest() {
@@ -68,7 +86,7 @@ public class UserContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldPaginateUsersTest() {
+    public void shouldPaginateUsersContractTest() {
         userClient
                 .searchUsersByPage(VALID_LIMIT)
                 .statusCode(SC_OK)
@@ -76,7 +94,7 @@ public class UserContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldListUsersOrderTest() {
+    public void shouldListUsersOrderContractTest() {
         userClient
                 .listUsersByOrder(VALID_ORDER)
                 .statusCode(SC_OK)
@@ -84,7 +102,7 @@ public class UserContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotListUsersWithInvalidOrderTest() {
+    public void shouldNotListUsersWithInvalidOrderContractTest() {
         userClient
                 .listUsersByOrder(INVALID_ORDER)
                 .statusCode(SC_BAD_REQUEST)

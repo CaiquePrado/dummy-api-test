@@ -63,4 +63,14 @@ public class UserSmokeTest extends BaseTest {
         assertThat(expectedUser.firstName(), is(validUpdateUserFactory().firstName()));
         assertThat(expectedUser.lastName(), is(validUpdateUserFactory().lastName()));
     }
+
+    @Test(description = "CT006.002")
+    public void shouldLoginUserTest() {
+        userClient
+                .login(validLoginFactory())
+                .statusCode(SC_OK)
+                .body("username", equalTo("emilys"))
+                .body("email", equalTo("emily.johnson@x.dummyjson.com"));
+
+    }
 }

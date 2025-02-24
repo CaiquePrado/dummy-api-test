@@ -68,7 +68,7 @@ public class ProductContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldSearchProductByNameTest() {
+    public void shouldSearchProductByNameContractTest() {
         productClient
                 .searchProductByName(VALID_NAME)
                 .statusCode(SC_OK)
@@ -76,7 +76,7 @@ public class ProductContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldPaginateProductsTest() {
+    public void shouldPaginateProductsContractTest() {
         productClient
                 .searchProductsByPage(VALID_LIMIT)
                 .statusCode(SC_OK)
@@ -84,7 +84,7 @@ public class ProductContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldListProductsByCategoryTest() {
+    public void shouldListProductsByCategoryContractTest() {
         productClient
                 .listProductsByCategory(VALID_CATEGORY)
                 .statusCode(SC_OK)
@@ -92,7 +92,7 @@ public class ProductContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldListProductsOrderTest() {
+    public void shouldListProductsOrderContractTest() {
         productClient
                 .listProductsByOrder(VALID_ORDER)
                 .statusCode(SC_OK)
@@ -100,7 +100,7 @@ public class ProductContractTest extends BaseTest {
     }
 
     @Test
-    public void shouldNotListProductsWithInvalidOrderTest() {
+    public void shouldNotListProductsWithInvalidOrderContractTest() {
         productClient
                 .listProductsByOrder(INVALID_ORDER)
                 .statusCode(SC_BAD_REQUEST)

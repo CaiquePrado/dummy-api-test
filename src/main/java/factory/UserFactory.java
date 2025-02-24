@@ -17,8 +17,22 @@ public interface UserFactory {
                 .email("emily.johnson@x.dummyjson.com")
                 .phone("+81 965-431-3024")
                 .username("emilys")
-                .password("emilyspass")
+                .password("emilys")
                 .birthDate("1996-05-30")
+                .build();
+    }
+
+    static User validLoginFactory() {
+        return User.builder()
+                .username("emilys")
+                .password("emilyspass")
+                .build();
+    }
+
+    static User invalidLoginFactory() {
+        return User.builder()
+                .username(faker.name().firstName())
+                .password(faker.internet().password(8, 20))
                 .build();
     }
 
@@ -90,7 +104,7 @@ public interface UserFactory {
 
     static User createUserWithUsername() {
         return User.builder()
-                .username(faker.name().username())
+                .username(faker.name().firstName())
                 .build();
     }
 

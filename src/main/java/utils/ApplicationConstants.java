@@ -43,4 +43,16 @@ public class ApplicationConstants {
     public static final String PUT_USER_SCHEMA = USER_SCHEMA_PATH + "/PUT-user-contract.json";
     public static final String GET_ORDER_USER_SCHEMA = USER_SCHEMA_PATH + "/GET-order-user-contract.json";
     public static final String GET_LIMIT_USER_SCHEMA = USER_SCHEMA_PATH + "/GET-limit-user-contract.json";
+    public static final String POST_LOGIN_SCHEMA = USER_SCHEMA_PATH + "/POST-login-user-contract.json";
+    public static final String POST_INVALID_LOGIN_SCHEMA = USER_SCHEMA_PATH + "/POST-invalid-login-user-contract.json";
+
+    public static final String EXPIRED_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+            "eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmc"
+            +
+            "vSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcxNjA2MDMyNSwiZXhwIjoxNzE2MDYzOTI1fQ.jrVxvJxSQZO_fhjYRMudXs3zO7dfx9EWBc2toDEBub4";
+
+    public static final String INVALID_TOKEN = "expiredToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+            "eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmc"
+            +
+            "vSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcxNjA2MDMyNSwiZXhwIjoxNzE2MDYzOTI1fQ.jrVxvJxSQZO_fhjYRMudXs3zO7dfx9EWBc2toDEBub4";
 }

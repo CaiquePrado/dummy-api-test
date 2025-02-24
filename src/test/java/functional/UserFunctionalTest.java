@@ -13,6 +13,20 @@ import static org.hamcrest.Matchers.*;
 
 public class UserFunctionalTest extends BaseTest {
 
+    @Test(description = "CT006.002")
+    public void shouldNotLoginWithInvalidCredentialsTest() {
+        var expectedMessage = userClient
+                .login(invalidLoginFactory())
+                .statusCode(SC_BAD_REQUEST)
+                .extract()
+                .as(Message.class);
+
+        String expectedErrorMessage = "Invalid credentials";
+
+        assertThat(expectedMessage.message(), is(expectedErrorMessage));
+
+    }
+
     @DataProvider(name = "userFactory")
     public Object[][] userFactory() {
         return new Object[][]{
