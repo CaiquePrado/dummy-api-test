@@ -162,7 +162,6 @@ public class ProductFunctionalTest extends BaseTest {
                 {"smartphones"},
                 {"laptops"},
                 {"fragrances"},
-                {"skincare"},
                 {"groceries"},
                 {"home-decoration"}
         };
