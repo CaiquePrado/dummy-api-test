@@ -51,8 +51,6 @@ public class ApplicationConstants {
             +
             "vSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcxNjA2MDMyNSwiZXhwIjoxNzE2MDYzOTI1fQ.jrVxvJxSQZO_fhjYRMudXs3zO7dfx9EWBc2toDEBub4";
 
-    public static final String INVALID_TOKEN = "expiredToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-            "eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmc"
-            +
-            "vSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcxNjA2MDMyNSwiZXhwIjoxNzE2MDYzOTI1fQ.jrVxvJxSQZO_fhjYRMudXs3zO7dfx9EWBc2toDEBub4";
+    public static final String INVALID_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+            "eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcxNjA2MDMyNSwiZXhwIjoxNzE2MDYzOTI1fQ.jrVxvJxSQZO_fhjYRMudXs3zO7dfx9EWBc2toDEBub4";
 }

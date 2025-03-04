@@ -1,5 +1,7 @@
 package base;
 
+import static io.restassured.http.ContentType.JSON;
+
 import client.ProductClient;
 import client.UserClient;
 import config.PropertiesUtils;
@@ -9,8 +11,6 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import static io.restassured.http.ContentType.JSON;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
