@@ -18,7 +18,7 @@ public class ProductContractTest extends BaseTest {
         shouldLoginUserTest();
     }
 
-    @Test
+    @Test(description = "should create product successfully")
     public void shouldCreateProductContractTest() {
         productClient
                 .createValidProduct()
@@ -26,7 +26,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(POST_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "should delete product by valid ID")
     public void shouldDeleteProductContractTest() {
         productClient
                 .deleteProductById(VALID_ID)
@@ -34,7 +34,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(DELETE_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "should list all products successfully")
     public void shouldListProductsContractTest() {
         productClient
                 .listAllProducts()
@@ -42,7 +42,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_PRODUCTS_SCHEMA)));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "should list product by valid ID")
     public void shouldListProductByIdContractTest() {
         productClient
                 .listProductById(VALID_ID)
@@ -50,7 +50,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "should update product by valid ID")
     public void updateValidProductContractTest() {
         productClient
                 .updateProductById(VALID_ID)
@@ -58,7 +58,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(PUT_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "should not delete product with invalid ID")
     public void shouldNotDeleteProductContractTest() {
         productClient
                 .deleteProductById(INVALID_ID)
@@ -66,7 +66,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "should not list product with invalid ID")
     public void shouldNotListProductByIdContractTest() {
         productClient
                 .listProductById(INVALID_ID)
@@ -74,7 +74,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should search product by name")
     public void shouldSearchProductByNameContractTest() {
         productClient
                 .searchProductByName(VALID_NAME)
@@ -82,7 +82,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_SEARCH_PRODUCT_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should paginate products with valid limit")
     public void shouldPaginateProductsContractTest() {
         productClient
                 .searchProductsByPage(VALID_LIMIT)
@@ -90,7 +90,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_LIMIT_PRODUCT_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should list products by category")
     public void shouldListProductsByCategoryContractTest() {
         productClient
                 .listProductsByCategory(VALID_CATEGORY)
@@ -98,7 +98,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_CATEGORY_PRODUCT_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should list products by order")
     public void shouldListProductsOrderContractTest() {
         productClient
                 .listProductsByOrder(VALID_ORDER)
@@ -106,7 +106,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_ORDER_PRODUCT_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should not list products with invalid order")
     public void shouldNotListProductsWithInvalidOrderContractTest() {
         productClient
                 .listProductsByOrder(INVALID_ORDER)
@@ -114,7 +114,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_INVALID_ORDER_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "Não deve acessar com token inválido")
+    @Test(description = "should not access with invalid token")
     public void shouldNotAccessWithInvalidToken() {
         productClient
                 .listAllProductsWithToken(INVALID_TOKEN)
@@ -122,7 +122,7 @@ public class ProductContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "Não deve acessar com token expirado")
+    @Test(description = "should not access with expired token")
     public void shouldNotAccessWithExpiredToken() {
         productClient
                 .listAllProductsWithToken(EXPIRED_TOKEN)

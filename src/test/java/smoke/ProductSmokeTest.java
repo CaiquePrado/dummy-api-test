@@ -40,7 +40,7 @@ public class ProductSmokeTest extends BaseTest {
                 .body("deletedOn", notNullValue());
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "CT002.001")
     public void shouldListProductsTest() {
         productClient
                 .listAllProducts()
@@ -48,7 +48,7 @@ public class ProductSmokeTest extends BaseTest {
                 .body("products.size()", greaterThan(0));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "CT002.002")
     public void shouldListProductByIdTest() {
         var expectedProduct = productClient
                 .listProductById(VALID_ID)

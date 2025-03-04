@@ -13,7 +13,7 @@ import static utils.ApplicationConstants.*;
 
 public class UserContractTest extends BaseTest {
 
-    @Test
+    @Test(description = "should login user with valid credentials")
     public void shouldLoginUserContractTest() {
         userClient
                 .login(validLoginFactory())
@@ -21,7 +21,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(POST_LOGIN_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should not login user with invalid credentials")
     public void shouldNotLoginUserWithInvalidCredentialsContractTest() {
         userClient
                 .login(invalidLoginFactory())
@@ -29,7 +29,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(POST_INVALID_LOGIN_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should create a user successfully")
     public void shouldCreateUserContractTest() {
         userClient
                 .createValidUser()
@@ -37,7 +37,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(POST_USER_SCHEMA)));
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "should delete user by ID")
     public void shouldDeleteUserContractTest() {
         userClient
                 .deleteUserById(VALID_ID)
@@ -45,7 +45,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(DELETE_USER_SCHEMA)));
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "should list all users successfully")
     public void shouldListUsersContractTest() {
         userClient
                 .listAllUsers()
@@ -53,7 +53,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_USERS_SCHEMA)));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "should list user by valid ID")
     public void shouldListUserByIdContractTest() {
         userClient
                 .listUserById(VALID_ID)
@@ -61,7 +61,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_USER_SCHEMA)));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "should update user by valid ID")
     public void updateValidUserContractTest() {
         userClient
                 .updateUserById(VALID_ID)
@@ -69,7 +69,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(PUT_USER_SCHEMA)));
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "should not delete user with invalid ID")
     public void shouldNotDeleteUserContractTest() {
         userClient
                 .deleteUserById(INVALID_ID)
@@ -77,7 +77,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "should not list user with invalid ID")
     public void shouldNotListUserByIdContractTest() {
         userClient
                 .listUserById(INVALID_ID)
@@ -85,7 +85,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should paginate users with valid limit")
     public void shouldPaginateUsersContractTest() {
         userClient
                 .searchUsersByPage(VALID_LIMIT)
@@ -93,7 +93,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_LIMIT_USER_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should list users by order")
     public void shouldListUsersOrderContractTest() {
         userClient
                 .listUsersByOrder(VALID_ORDER)
@@ -101,7 +101,7 @@ public class UserContractTest extends BaseTest {
                 .body(matchesJsonSchema(new File(GET_ORDER_USER_SCHEMA)));
     }
 
-    @Test
+    @Test(description = "should not list users with invalid order")
     public void shouldNotListUsersWithInvalidOrderContractTest() {
         userClient
                 .listUsersByOrder(INVALID_ORDER)

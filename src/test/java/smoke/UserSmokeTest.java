@@ -14,7 +14,7 @@ import static utils.ApplicationConstants.VALID_ID;
 
 public class UserSmokeTest extends BaseTest {
 
-    @Test(description = "CT003.001")
+    @Test(description = "CT008.001")
     public void shouldCreateUserTest() {
         var expectedUser = userClient
                 .createValidUser()
@@ -25,7 +25,7 @@ public class UserSmokeTest extends BaseTest {
         assertThat(expectedUser, is(createValidUserFactory()));
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "CT009.001")
     public void shouldDeleteUserTest() {
         userClient
                 .deleteUserById(VALID_ID)
@@ -34,7 +34,7 @@ public class UserSmokeTest extends BaseTest {
                 .body("deletedOn", notNullValue());
     }
 
-    @Test(description = "CT004.001")
+    @Test(description = "CT007.001")
     public void shouldListUsersTest() {
         userClient
                 .listAllUsers()
@@ -42,7 +42,7 @@ public class UserSmokeTest extends BaseTest {
                 .body("users.size()", greaterThan(0));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "CT007.002")
     public void shouldListUserByIdTest() {
         var expectedUser = userClient
                 .listUserById(VALID_ID)
@@ -53,7 +53,7 @@ public class UserSmokeTest extends BaseTest {
         assertThat(expectedUser, is(idOneUserFactory()));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "CT010.001")
     public void updateValidUserTest() {
         var expectedUser = userClient
                 .updateUserById(VALID_ID)
@@ -65,7 +65,7 @@ public class UserSmokeTest extends BaseTest {
         assertThat(expectedUser.lastName(), is(validUpdateUserFactory().lastName()));
     }
 
-    @Test(description = "CT006.002")
+    @Test(description = "CT001.001")
     public static void shouldLoginUserTest() {
         String token = userClient
                 .login(validLoginFactory())

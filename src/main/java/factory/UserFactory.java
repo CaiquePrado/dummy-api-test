@@ -29,6 +29,28 @@ public interface UserFactory {
                 .build();
     }
 
+    static User invalidUsernameLoginFactory() {
+        return User.builder()
+                .username(faker.name().firstName())
+                .password("emilyspass")
+                .build();
+    }
+
+    static User invalidPasswordLoginFactory() {
+        return User.builder()
+                .username("emilys")
+                .password(faker.internet().password(8, 20))
+                .build();
+    }
+
+    static User LoginWithoutFieldsFactory() {
+        return User.builder()
+                .username(" ")
+                .password(" ")
+                .build();
+    }
+
+
     static User invalidLoginFactory() {
         return User.builder()
                 .username(faker.name().firstName())

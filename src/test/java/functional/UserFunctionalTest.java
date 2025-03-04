@@ -13,10 +13,10 @@ import static org.hamcrest.Matchers.*;
 
 public class UserFunctionalTest extends BaseTest {
 
-    @Test(description = "CT006.002")
-    public void shouldNotLoginWithInvalidCredentialsTest() {
+    @Test(description = "CT001.002 CT001.003 CT001.004", dataProvider = "userLoginFactory")
+    public void shouldNotLoginWithInvalidCredentialsTest(User user) {
         var expectedMessage = userClient
-                .login(invalidLoginFactory())
+                .login(user)
                 .statusCode(SC_BAD_REQUEST)
                 .extract()
                 .as(Message.class);
@@ -27,36 +27,12 @@ public class UserFunctionalTest extends BaseTest {
 
     }
 
-    @DataProvider(name = "userFactory")
-    public Object[][] userFactory() {
-        return new Object[][]{
-                {createUserWithFirstName()},
-                {createUserWithLastName()},
-                {createUserWithMaidenName()},
-                {createUserWithAge()},
-                {createUserWithGender()},
-                {createUserWithEmail()},
-                {createUserWithPhone()},
-                {createUserWithUsername()},
-                {createUserWithPassword()},
-                {createUserWithBirthDate()}
-        };
-    }
-
-    @Test(dataProvider = "userFactory")
+    @Test(description = "CT008.002 CT008.003 CT008.004 CT008.005 CT008.006 CT008.007 CT008.008 CT008.009 CT008.10",
+            dataProvider = "userFactory")
     public void shouldCreateUserWithOneAttributeTest(User user) {
         userClient
                 .createUserWithAttributes(user)
                 .statusCode(SC_CREATED);
-    }
-
-    @DataProvider(name = "invalidIds")
-    public Object[][] provideInvalidIds() {
-        return new Object[][]{
-                {"-"},
-                {"invalid-id"},
-                {"!@#$%"}
-        };
     }
 
     @Test(dataProvider = "invalidIds")
@@ -72,7 +48,7 @@ public class UserFunctionalTest extends BaseTest {
         assertThat(expectedMessage.message(), is(expectedErrorMessage));
     }
 
-    @Test(dataProvider = "invalidIds")
+    @Test(description = "CT009.002", dataProvider = "invalidIds")
     public void shouldNotDeleteUserByInvalidIdTest(String invalidId) {
         var expectedMessage = userClient
                 .deleteUserById(invalidId)
@@ -85,7 +61,7 @@ public class UserFunctionalTest extends BaseTest {
         assertThat(expectedMessage.message(), is(expectedErrorMessage));
     }
 
-    @Test(dataProvider = "invalidIds")
+    @Test(description = "CT007.003", dataProvider = "invalidIds")
     public void shouldNotFindUserByInvalidIdTest(String invalidId) {
         var expectedMessage = userClient
                 .listUserById(invalidId)
@@ -99,7 +75,7 @@ public class UserFunctionalTest extends BaseTest {
     }
 
 
-    @Test(dataProvider = "limitFactory", dataProviderClass = ProductFunctionalTest.class)
+    @Test(description = "CT007.004", dataProvider = "limitFactory", dataProviderClass = ProductFunctionalTest.class)
     public void shouldPaginateUsersTest(int limit) {
         userClient
                 .searchUsersByPage(limit)
@@ -108,7 +84,7 @@ public class UserFunctionalTest extends BaseTest {
                 .body("limit", notNullValue());
     }
 
-    @Test
+    @Test(description = "CT007.005")
     public void shouldNotPaginateUsersTest() {
         var expectedMessage = userClient
                 .searchUsersByPage()
@@ -119,7 +95,7 @@ public class UserFunctionalTest extends BaseTest {
         assertThat(expectedMessage.message(), is("Invalid 'limit' - must be a number"));
     }
 
-    @Test(dataProvider = "skipFactory", dataProviderClass = ProductFunctionalTest.class)
+    @Test(description = "CT007.006", dataProvider = "skipFactory", dataProviderClass = ProductFunctionalTest.class)
     public void shouldSkipUsersTest(int skip) {
         userClient
                 .skipUsersByPage(skip)
@@ -128,7 +104,7 @@ public class UserFunctionalTest extends BaseTest {
                 .body("skip", notNullValue());
     }
 
-    @Test
+    @Test(description = "CT007.007")
     public void shouldNotSkipUsersTest() {
         var expectedMessage = userClient
                 .skipUsersByPage()
@@ -137,6 +113,53 @@ public class UserFunctionalTest extends BaseTest {
                 .as(Message.class);
 
         assertThat(expectedMessage.message(), is("Invalid 'skip' - must be a number"));
+    }
+
+    @Test(description = "CT007.008", dataProvider = "selectFactory")
+    public void shouldSelectUsersTest(String select) {
+        userClient
+                .selectUserByAttribute(select)
+                .statusCode(SC_OK)
+                .body("users.size()", greaterThan(0));
+    }
+
+    @Test(description = "CT007.009")
+    public void shouldSelectSkipAndLimitUsersTest() {
+        userClient
+                .selectLimitSkipUsers()
+                .statusCode(SC_OK)
+                .body("users.size()", greaterThan(0))
+                .body("skip", notNullValue())
+                .body("limit", notNullValue());
+    }
+
+    @Test(description = "CT007.010", dataProvider = "sortOrders", dataProviderClass = ProductFunctionalTest.class)
+    public void shouldListUsersOrderTest(String order) {
+        userClient
+                .listUsersByOrder(order)
+                .statusCode(SC_OK)
+                .body("users.size()", greaterThan(0));
+    }
+
+    @Test(description = "CT007.011", dataProvider = "invalidOrders", dataProviderClass = ProductFunctionalTest.class)
+    public void shouldNotListUsersWithInvalidOrderTest(String order) {
+        var expectedMessage = userClient
+                .listUsersByOrder(order)
+                .statusCode(SC_BAD_REQUEST)
+                .extract()
+                .as(Message.class);
+
+        assertThat(expectedMessage.message(), is("Order can be: 'asc' or 'desc'"));
+    }
+
+    @DataProvider(name = "userLoginFactory")
+    public Object[][] userLoginFactory() {
+        return new Object[][]{
+                {invalidUsernameLoginFactory()},
+                {invalidPasswordLoginFactory()},
+                {LoginWithoutFieldsFactory()},
+                {invalidLoginFactory()}
+        };
     }
 
     @DataProvider(name = "selectFactory")
@@ -155,40 +178,38 @@ public class UserFunctionalTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "selectFactory")
-    public void shouldSelectUsersTest(String select) {
-        userClient
-                .selectUserByAttribute(select)
-                .statusCode(SC_OK)
-                .body("users.size()", greaterThan(0));
+    @DataProvider(name = "invalidIds")
+    public Object[][] provideInvalidIds() {
+        return new Object[][]{
+                {"-"},
+                {"invalid-id"},
+                {"!@#$%"}
+        };
     }
 
-    @Test
-    public void shouldSelectSkipAndLimitUsersTest() {
-        userClient
-                .selectLimitSkipUsers()
-                .statusCode(SC_OK)
-                .body("users.size()", greaterThan(0))
-                .body("skip", notNullValue())
-                .body("limit", notNullValue());
+    @DataProvider(name = "invalidOrderFactory")
+    public Object[][] invalidOrderFactory() {
+        return new Object[][]{
+                {"nulls_first"},
+                {"nulls_last"},
+                {"random"},
+                {"@#@"}
+        };
     }
 
-    @Test(dataProvider = "orderFactory", dataProviderClass = ProductFunctionalTest.class)
-    public void shouldListUsersOrderTest(String order) {
-        userClient
-                .listUsersByOrder(order)
-                .statusCode(SC_OK)
-                .body("users.size()", greaterThan(0));
-    }
-
-    @Test(dataProvider = "invalidOrderFactory", dataProviderClass = ProductFunctionalTest.class)
-    public void shouldNotListUsersWithInvalidOrderTest(String order) {
-        var expectedMessage = userClient
-                .listUsersByOrder(order)
-                .statusCode(SC_BAD_REQUEST)
-                .extract()
-                .as(Message.class);
-
-        assertThat(expectedMessage.message(), is("Order can be: 'asc' or 'desc'"));
+    @DataProvider(name = "userFactory")
+    public Object[][] userFactory() {
+        return new Object[][]{
+                {createUserWithFirstName()},
+                {createUserWithLastName()},
+                {createUserWithMaidenName()},
+                {createUserWithAge()},
+                {createUserWithGender()},
+                {createUserWithEmail()},
+                {createUserWithPhone()},
+                {createUserWithUsername()},
+                {createUserWithPassword()},
+                {createUserWithBirthDate()}
+        };
     }
 }

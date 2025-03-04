@@ -11,7 +11,8 @@
 ### Cenário 001: Login com sucesso
 
 **Dado** que o usuário tem o username "kminchelle" e a password "0lelplR",  
-**Quando** o usuário faz uma requisição POST para a rota "/auth/login" com o username "kminchelle" e a password "0lelplR",  
+**Quando** o usuário faz uma requisição POST para a rota "/auth/login" com o username "kminchelle" e a password "
+0lelplR",  
 **Então** a API deve retornar um status "201 CREATED",  
 **E** a API deve retornar um token de autenticação válido.
 
@@ -128,20 +129,6 @@ Exemplos:
 | iphone X |
 | Samsung Universe 9 |
 
-### Cenário 005: Pesquisar por produtos com a consulta inválida
-
-**Dado** que o usuário possui um token de autenticação válido,  
-**Quando** o usuário faz uma requisição GET para a rota "/auth/products/search?q={query}",  
-**Então** a API deve retornar um status "200 OK",  
-**E** a API deve retornar uma lista de produtos vazia.
-
-Exemplos:
-| `<query>` |
-| --- |
-| galinha |
-| pc gamer |
-| !@#$%^&\_() |
-
 ### Cenário 006: Obter todas as categorias de produtos
 
 **Dado** que o usuário possui um token de autenticação válido,  
@@ -203,20 +190,6 @@ Exemplos:
 | automotive |
 | motorcycle |
 | lighting |
-
-### Cenário 008: Tentativa de obter produtos na categoria `<category>` inválida
-
-**Dado** que o usuário possui um token de autenticação válido,  
-**Quando** o usuário faz uma requisição GET para a rota "/auth/products/category/<category>",  
-**Então** a API deve retornar um status "200 OK",  
-**E** a API deve retornar uma lista de produtos vazia.
-
-Exemplos:
-| `<category>` |
-| --- |
-| airline |
-| abcdef |
-| 12345 |
 
 ### Cenário 009: Obter produtos com o parâmetro 'skip'
 
@@ -302,24 +275,6 @@ Exemplos:
 | --8 | --8 |
 | !0 | !0 |
 
-### Cenário 015: Acesso a rota protegida sem token
-
-**Dado** que o usuário não possui um token de autenticação,  
-**Quando** o usuário tenta acessar uma rota protegida da API,  
-**Então** a API deve retornar um status "401 Unauthorized",  
-**E** a API deve retornar a mensagem "Unauthorized access".
-
-Exemplos:
-| Rota |
-| --- |
-| /auth/products |
-| /auth/products?skip=5&limit=10 |
-| /auth/products?limit=10 |
-| /auth/products?skip=5 |
-| /auth/products/category/smartphones |
-| /auth/products/categories |
-| /auth/products/search?q=iphone 9 |
-
 ### Cenário 016: Tentativa de acesso com token expirado
 
 **Dado** que o usuário possui um token de autenticação expirado,  
@@ -367,7 +322,8 @@ Exemplos:
 ### Cenário 001: Criar um produto válido
 
 **Dado** que o usuário possui um token de autenticação válido e um produto válido,  
-**Quando** o usuário faz uma requisição POST para a rota "/products/add" com o corpo da requisição contendo o produto válido,  
+**Quando** o usuário faz uma requisição POST para a rota "/products/add" com o corpo da requisição contendo o produto
+válido,  
 **Então** a API deve retornar um status "200 OK",  
 **E** a API deve retornar o produto criado.
 
@@ -693,50 +649,83 @@ Exemplos:
 | 102 |
 | $$@(8) |
 
-**Cenário**: Buscar um usuário válido  
-**Dado** que o usuário deseja buscar um usuário com o nome "John",  
-**Quando** o usuário faz uma requisição GET para a rota "/users/search?q=John",  
-**Então** a API deve retornar um status "200 OK",  
-**E** a API deve retornar o(s) usuário(s) correspondente(s) à busca.
+**Dado** que o usuário faz uma requisição para buscar usuários com um limite de página válido  
+**Quando** o usuário faz uma requisição GET para a rota "/users?page=1&limit={limit}"  
+**Então** a API deve retornar status "200 OK"  
+**E** o corpo da resposta deve conter uma lista de usuários com tamanho maior que 0  
+**E** o valor do "limit" deve ser retornado
 
-Exemplos:
-| `<name>` |
+**Exemplos:**
+| `<limit>` |
 | --- |
-| John |
-| Sheldon |
-| Terry |
+| 10 |
+| 20 |
+| 50 |
 
-**Cenário**: Buscar um usuário inválido  
-**Dado** que o usuário deseja buscar um usuário com um nome inválido,  
-**Quando** o usuário faz uma requisição GET para a rota "/users/search?q=InvalidUser",  
-**Então** a API deve retornar um status "404 Not Found",  
-**E** a API deve retornar uma mensagem indicando que o usuário não foi encontrado.
+**Dado** que o usuário faz uma requisição para buscar usuários com um limite inválido  
+**Quando** o usuário faz uma requisição GET para a rota "/users?page=1&limit={limit}"  
+**Então** a API deve retornar status "400 Bad Request"  
+**E** a API deve retornar uma mensagem de erro indicando que o valor de "limit" é inválido
 
-Exemplos:
-| `<name>` |
+**Dado** que o usuário faz uma requisição para buscar usuários com um valor de "skip" válido  
+**Quando** o usuário faz uma requisição GET para a rota "/users?skip={skip}"  
+**Então** a API deve retornar status "200 OK"  
+**E** o corpo da resposta deve conter uma lista de usuários com tamanho maior que 0  
+**E** o valor de "skip" deve ser retornado
+
+**Exemplos:**
+| `<skip>` |
 | --- |
-| InvalidUser |
-| NonExistentUser |
-| UnknownUser |
+| 5 |
+| 10 |
+| 15 |
 
-**Cenário**: Buscar com uma query vazia  
-**Dado** que o usuário deseja buscar um usuário sem especificar um nome,  
-**Quando** o usuário faz uma requisição GET para a rota "/users/search?q=",  
-**Então** a API deve retornar um status "400 Bad Request",  
-**E** a API deve retornar uma mensagem indicando que a query está vazia.
+**Dado** que o usuário faz uma requisição para buscar usuários com um valor de "skip" inválido  
+**Quando** o usuário faz uma requisição GET para a rota "/users?skip={skip}"  
+**Então** a API deve retornar status "400 Bad Request"  
+**E** a API deve retornar uma mensagem de erro indicando que o valor de "skip" é inválido
 
-**Cenário**: Buscar um usuário com ID não numérico  
-**Dado** que o usuário deseja buscar um usuário com um ID não numérico,  
-**Quando** o usuário faz uma requisição GET para a rota "/users/{id}" com um ID não numérico,  
-**Então** a API deve retornar um status "400 Bad Request",  
-**E** a API deve retornar uma mensagem indicando que o ID não é válido.
+**Dado** que o usuário faz uma requisição para buscar usuários e deseja selecionar um atributo específico  
+**Quando** o usuário faz uma requisição GET para a rota "/users?select={select}"  
+**Então** a API deve retornar status "200 OK"  
+**E** o corpo da resposta deve conter uma lista de usuários com tamanho maior que 0
 
-Exemplos:
-| `<id>` |
-| --- |
-| $$@(8) |
-| ABC |
-| XYZ |
+**Exemplos:**
+| `<select>` |
+| -------------- |
+| firstName |
+| lastName |
+| email |
+| phone |
+
+**Dado** que o usuário faz uma requisição para buscar usuários com "limit" e "skip"  
+**Quando** o usuário faz uma requisição GET para a rota "/users?limit={limit}&skip={skip}"  
+**Então** a API deve retornar status "200 OK"  
+**E** o corpo da resposta deve conter uma lista de usuários com tamanho maior que 0  
+**E** o valor de "limit" e "skip" deve ser retornado
+
+**Dado** que o usuário faz uma requisição para buscar usuários com uma ordem específica  
+**Quando** o usuário faz uma requisição GET para a rota "/users?order={order}"  
+**Então** a API deve retornar status "200 OK"  
+**E** o corpo da resposta deve conter uma lista de usuários com tamanho maior que 0
+
+**Exemplos:**
+| `<order>` |
+| ----- |
+| asc |
+| desc |
+
+**Dado** que o usuário faz uma requisição para buscar usuários com uma ordem inválida  
+**Quando** o usuário faz uma requisição GET para a rota "/users?order={order}"  
+**Então** a API deve retornar status "400 Bad Request"  
+**E** a API deve retornar uma mensagem de erro indicando que a ordem é inválida  
+**E** a mensagem de erro deve ser "Order can be: 'asc' or 'desc'"
+
+**Exemplos:**
+| `<order>` |
+| ------- |
+| up |
+| reverse |
 
 ## Caso de Teste 008: Validar processo de criação de usuário
 
@@ -752,7 +741,8 @@ Exemplos:
 
 **Cenário**: Criar um usuário com email existente  
 **Dado** que o administrador deseja criar um novo usuário com um email que já existe no sistema,  
-**Quando** o administrador faz uma requisição POST para a rota "/users/add" com os dados do usuário com email existente,  
+**Quando** o administrador faz uma requisição POST para a rota "/users/add" com os dados do usuário com email
+existente,  
 **Então** a API deve retornar um status "400 Bad Request" indicando que o email já está em uso.
 
 **Cenário**: Criar um usuário inválido  
@@ -793,11 +783,6 @@ Exemplos:
 | 1 |
 | 50 |
 | 100 |
-
-**Cenário**: Tentativa de excluir todos os usuários  
-**Dado** que o administrador deseja excluir todos os usuários do sistema,  
-**Quando** o administrador faz uma requisição DELETE para a rota "/users",  
-**Então** a API deve retornar um status "404 Not Found" indicando que não há usuários para excluir.
 
 **Cenário**: Excluir um usuário com ID não numérico  
 **Dado** que o administrador deseja excluir um usuário com um ID não numérico,  
