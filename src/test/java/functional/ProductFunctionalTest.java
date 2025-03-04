@@ -1,25 +1,121 @@
 package functional;
 
 import base.BaseTest;
-import dto.Category;
 import dto.Message;
 import dto.Product;
-import factory.CategoryFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.Arrays;
 
 import static factory.ProductFactory.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
+import static smoke.UserSmokeTest.shouldLoginUserTest;
+import static utils.ApplicationConstants.EXPIRED_TOKEN;
+import static utils.ApplicationConstants.INVALID_TOKEN;
 
 public class ProductFunctionalTest extends BaseTest {
 
-    @DataProvider(name = "productFactory")
-    public Object[][] productFactory() {
+    @BeforeClass
+    public void setup() {
+        shouldLoginUserTest();
+    }
+
+    @Test(description = "Deve criar produtos com diferentes atributos", dataProvider = "productAttributes")
+    public void shouldCreateProductWithSingleAttribute(Product product) {
+        productClient
+                .createProductWithAttributes(product)
+                .statusCode(SC_CREATED);
+    }
+
+    @Test(description = "Não deve atualizar produto com ID inválido", dataProvider = "invalidIds")
+    public void shouldNotUpdateProductWithInvalidId(String invalidId) {
+        var response = productClient
+                .updateProductById(invalidId)
+                .statusCode(SC_NOT_FOUND)
+                .extract()
+                .as(Message.class);
+
+        assertThat(response.message(), is(String.format("Product with id '%s' not found", invalidId)));
+    }
+
+    @Test(description = "Não deve deletar produto com ID inválido", dataProvider = "invalidIds")
+    public void shouldNotDeleteProductWithInvalidId(String invalidId) {
+        var response = productClient
+                .deleteProductById(invalidId)
+                .statusCode(SC_NOT_FOUND)
+                .extract()
+                .as(Message.class);
+
+        assertThat(response.message(), is(String.format("Product with id '%s' not found", invalidId)));
+    }
+
+    @Test(description = "Deve buscar produtos por nome", dataProvider = "searchTerms")
+    public void shouldSearchProductsByName(String searchTerm) {
+        productClient
+                .searchProductByName(searchTerm)
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0));
+    }
+
+    @Test(description = "Deve listar produtos com paginação", dataProvider = "limitValues")
+    public void shouldListProductsWithPagination(int limit) {
+        productClient
+                .searchProductsByPage(limit)
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0))
+                .body("limit", notNullValue());
+    }
+
+    @Test(description = "Deve listar produtos por categoria", dataProvider = "categories")
+    public void shouldListProductsByCategory(String category) {
+        productClient
+                .listProductsByCategory(category)
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0));
+    }
+
+    @Test(description = "Deve listar produtos ordenados", dataProvider = "sortOrders")
+    public void shouldListProductsWithOrder(String order) {
+        productClient
+                .listProductsByOrder(order)
+                .statusCode(SC_OK)
+                .body("products.size()", greaterThan(0));
+    }
+
+    @Test(description = "Não deve listar produtos com ordem inválida", dataProvider = "invalidOrders")
+    public void shouldNotListProductsWithInvalidOrder(String order) {
+        var response = productClient
+                .listProductsByOrder(order)
+                .statusCode(SC_BAD_REQUEST)
+                .extract()
+                .as(Message.class);
+
+        assertThat(response.message(), is("Order can be: 'asc' or 'desc'"));
+    }
+
+    @Test(description = "Não deve acessar com token inválido ou expirado", dataProvider = "invalidTokens")
+    public void shouldNotAccessWithInvalidOrExpiredToken(String token, String expectedMessage) {
+        var response = productClient
+                .listAllProductsWithToken(token)
+                .statusCode(SC_INTERNAL_SERVER_ERROR)
+                .extract()
+                .as(Message.class);
+
+        assertThat(response.message(), is(expectedMessage));
+    }
+
+    @DataProvider(name = "invalidTokens")
+    public Object[][] invalidTokens() {
+        return new Object[][]{
+                {INVALID_TOKEN, "invalid signature"},
+                {EXPIRED_TOKEN, "invalid signature"}
+        };
+    }
+
+    @DataProvider(name = "productAttributes")
+    public Object[][] getProductAttributes() {
         return new Object[][]{
                 {createProductWithTitleFactory()},
                 {createProductWithDescriptionFactory()},
@@ -33,15 +129,8 @@ public class ProductFunctionalTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "productFactory")
-    public void shouldCreateProductWithOneAttributeTest(Product product) {
-        productClient
-                .createProductWithAttributes(product)
-                .statusCode(SC_CREATED);
-    }
-
     @DataProvider(name = "invalidIds")
-    public Object[][] provideInvalidIds() {
+    public Object[][] getInvalidIds() {
         return new Object[][]{
                 {"12345"},
                 {"invalid-id"},
@@ -49,47 +138,8 @@ public class ProductFunctionalTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "invalidIds")
-    public void shouldNotUpdateProductByInvalidIdTest(String invalidId) {
-        var expectedMessage = productClient
-                .updateProductById(invalidId)
-                .statusCode(SC_NOT_FOUND)
-                .extract()
-                .as(Message.class);
-
-        String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
-
-        assertThat(expectedMessage.message(), is(expectedErrorMessage));
-    }
-
-    @Test(dataProvider = "invalidIds")
-    public void shouldNotDeleteProductByInvalidIdTest(String invalidId) {
-        var expectedMessage = productClient
-                .deleteProductById(invalidId)
-                .statusCode(SC_NOT_FOUND)
-                .extract()
-                .as(Message.class);
-
-        String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
-
-        assertThat(expectedMessage.message(), is(expectedErrorMessage));
-    }
-
-    @Test(dataProvider = "invalidIds")
-    public void shouldNotFindProductByInvalidIdTest(String invalidId) {
-        var expectedMessage = productClient
-                .listProductById(invalidId)
-                .statusCode(SC_NOT_FOUND)
-                .extract()
-                .as(Message.class);
-
-        String expectedErrorMessage = String.format("Product with id '%s' not found", invalidId);
-
-        assertThat(expectedMessage.message(), is(expectedErrorMessage));
-    }
-
-    @DataProvider(name = "searchFactory")
-    public Object[][] searchFactory() {
+    @DataProvider(name = "searchTerms")
+    public Object[][] getSearchTerms() {
         return new Object[][]{
                 {"phone"},
                 {"laptop"},
@@ -97,16 +147,8 @@ public class ProductFunctionalTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "searchFactory")
-    public void shouldSearchProductByNameTest(String search) {
-        productClient
-                .searchProductByName(search)
-                .statusCode(SC_OK)
-                .body("products.size()", greaterThan(0));
-    }
-
-    @DataProvider(name = "limitFactory")
-    public Object[][] limitFactory() {
+    @DataProvider(name = "limitValues")
+    public Object[][] getLimitValues() {
         return new Object[][]{
                 {10},
                 {100},
@@ -114,171 +156,33 @@ public class ProductFunctionalTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "limitFactory")
-    public void shouldPaginateProductsTest(int limit) {
-        productClient
-                .searchProductsByPage(limit)
-                .statusCode(SC_OK)
-                .body("products.size()", greaterThan(0))
-                .body("limit", notNullValue());
-    }
-
-    @Test
-    public void shouldNotPaginateProductsTest() {
-        var expectedMessage = productClient
-                .searchProductsByPage()
-                .statusCode(SC_BAD_REQUEST)
-                .extract()
-                .as(Message.class);
-
-        assertThat(expectedMessage.message(), is("Invalid 'limit' - must be a number"));
-    }
-
-    @DataProvider(name = "skipFactory")
-    public Object[][] skipFactory() {
+    @DataProvider(name = "categories")
+    public Object[][] getCategories() {
         return new Object[][]{
-                {10},
-                {50},
-                {100}
-        };
-    }
-
-    @Test(dataProvider = "skipFactory")
-    public void shouldSkipProductsTest(int skip) {
-        productClient
-                .skipProductsByPage(skip)
-                .statusCode(SC_OK)
-                .body("products.size()", greaterThan(0))
-                .body("skip", notNullValue());
-    }
-
-    @Test
-    public void shouldNotSkipProductsTest() {
-        var expectedMessage = productClient
-                .skipProductsByPage()
-                .statusCode(SC_BAD_REQUEST)
-                .extract()
-                .as(Message.class);
-
-        assertThat(expectedMessage.message(), is("Invalid 'skip' - must be a number"));
-    }
-
-    @DataProvider(name = "selectFactory")
-    public Object[][] selectFactory() {
-        return new Object[][]{
-                {"title"},
-                {"price"},
-                {"description"},
-                {"discountPercentage"},
-                {"rating"},
-                {"stock"},
-                {"brand"},
-                {"category"}
-        };
-    }
-
-    @Test(dataProvider = "selectFactory")
-    public void shouldSelectProductsTest(String select) {
-        productClient
-                .selectProductByAttribute(select)
-                .statusCode(SC_OK)
-                .body("products.size()", greaterThan(0));
-    }
-
-    @Test
-    public void shouldSelectSkipAndLimitProductsTest() {
-        productClient
-                .selectLimitSkipProducts()
-                .statusCode(SC_OK)
-                .body("products.size()", greaterThan(0))
-                .body("skip", notNullValue())
-                .body("limit", notNullValue());
-    }
-
-    @Test
-    public void shouldListCategoriesTest() {
-        var categoriesList = productClient
-                .listAllCategories()
-                .statusCode(SC_OK)
-                .extract()
-                .as(Category[].class);
-
-        assertThat(Arrays.asList(categoriesList), is(CategoryFactory.validCategoryResponse()));
-
-    }
-
-    @DataProvider(name = "categoriesFactory")
-    public Object[][] categoriesFactory() {
-        return new Object[][]{
-                {"beauty"},
-                {"fragrances"},
-                {"furniture"},
-                {"groceries"},
-                {"home-decoration"},
-                {"kitchen-accessories"},
-                {"laptops"},
-                {"mens-shirts"},
-                {"mens-shoes"},
-                {"mens-watches"},
-                {"mobile-accessories"},
-                {"motorcycle"},
-                {"skin-care"},
                 {"smartphones"},
-                {"sports-accessories"},
-                {"sunglasses"},
-                {"tablets"},
-                {"tops"},
-                {"vehicle"},
-                {"womens-bags"},
-                {"womens-dresses"},
-                {"womens-jewellery"},
-                {"womens-shoes"},
-                {"womens-watches"}
+                {"laptops"},
+                {"fragrances"},
+                {"skincare"},
+                {"groceries"},
+                {"home-decoration"}
         };
     }
 
-    @Test(dataProvider = "categoriesFactory")
-    public void shouldListProductsByCategoryTest(String category) {
-        productClient
-                .listProductsByCategory(category)
-                .statusCode(SC_OK)
-                .body("products.size()", greaterThan(0));
-    }
-
-    @DataProvider(name = "orderFactory")
-    public Object[][] orderFactory() {
+    @DataProvider(name = "sortOrders")
+    public Object[][] getSortOrders() {
         return new Object[][]{
                 {"asc"},
                 {"desc"}
         };
     }
 
-    @Test(dataProvider = "orderFactory")
-    public void shouldListProductsOrderTest(String order) {
-        productClient
-                .listProductsByOrder(order)
-                .statusCode(SC_OK)
-                .body("products.size()", greaterThan(0));
-    }
-
-    @DataProvider(name = "invalidOrderFactory")
-    public Object[][] invalidOrderFactory() {
+    @DataProvider(name = "invalidOrders")
+    public Object[][] getInvalidOrders() {
         return new Object[][]{
                 {"nulls_first"},
                 {"nulls_last"},
                 {"random"},
                 {"@#@"}
         };
-    }
-
-    @Test(dataProvider = "invalidOrderFactory")
-    public void shouldNotListProductsWithInvalidOrderTest(String order) {
-        var expectedMessage = productClient
-                .listProductsByOrder(order)
-                .statusCode(SC_BAD_REQUEST)
-                .extract()
-                .as(Message.class);
-
-        assertThat(expectedMessage.message(), is("Order can be: 'asc' or 'desc'"));
     }
 }

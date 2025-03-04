@@ -1,15 +1,22 @@
 package contract;
 
 import base.BaseTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.apache.http.HttpStatus.*;
+import static smoke.UserSmokeTest.shouldLoginUserTest;
 import static utils.ApplicationConstants.*;
 
 public class ProductContractTest extends BaseTest {
+
+    @BeforeClass
+    public void setup() {
+        shouldLoginUserTest();
+    }
 
     @Test
     public void shouldCreateProductContractTest() {
@@ -105,5 +112,21 @@ public class ProductContractTest extends BaseTest {
                 .listProductsByOrder(INVALID_ORDER)
                 .statusCode(SC_BAD_REQUEST)
                 .body(matchesJsonSchema(new File(GET_INVALID_ORDER_PRODUCT_SCHEMA)));
+    }
+
+    @Test(description = "Não deve acessar com token inválido")
+    public void shouldNotAccessWithInvalidToken() {
+        productClient
+                .listAllProductsWithToken(INVALID_TOKEN)
+                .statusCode(SC_INTERNAL_SERVER_ERROR)
+                .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
+    }
+
+    @Test(description = "Não deve acessar com token expirado")
+    public void shouldNotAccessWithExpiredToken() {
+        productClient
+                .listAllProductsWithToken(EXPIRED_TOKEN)
+                .statusCode(SC_INTERNAL_SERVER_ERROR)
+                .body(matchesJsonSchema(new File(DELETE_GET_INVALID_PRODUCT_SCHEMA)));
     }
 }

@@ -2,6 +2,7 @@ package smoke;
 
 import base.BaseTest;
 import dto.Product;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static factory.ProductFactory.*;
@@ -9,9 +10,15 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static smoke.UserSmokeTest.shouldLoginUserTest;
 import static utils.ApplicationConstants.VALID_ID;
 
 public class ProductSmokeTest extends BaseTest {
+
+    @BeforeClass
+    public void setup() {
+        shouldLoginUserTest();
+    }
 
     @Test(description = "CT003.001")
     public void shouldCreateProductTest() {
