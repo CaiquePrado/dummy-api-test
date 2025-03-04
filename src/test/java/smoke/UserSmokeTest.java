@@ -1,6 +1,7 @@
 package smoke;
 
 import base.BaseTest;
+import dto.AuthToken;
 import dto.User;
 import org.testng.annotations.Test;
 
@@ -65,12 +66,15 @@ public class UserSmokeTest extends BaseTest {
     }
 
     @Test(description = "CT006.002")
-    public void shouldLoginUserTest() {
-        userClient
+    public static void shouldLoginUserTest() {
+        String token = userClient
                 .login(validLoginFactory())
                 .statusCode(SC_OK)
                 .body("username", equalTo("emilys"))
-                .body("email", equalTo("emily.johnson@x.dummyjson.com"));
+                .body("email", equalTo("emily.johnson@x.dummyjson.com"))
+                .extract()
+                .path("accessToken");
 
+        AuthToken.setToken(token);
     }
 }
