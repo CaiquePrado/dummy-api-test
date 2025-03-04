@@ -1,13 +1,29 @@
 package client;
 
+import static io.restassured.RestAssured.given;
+import static utils.ApplicationConstants.VALID_LIMIT;
+import static utils.ApplicationConstants.VALID_SELECT;
+import static utils.ApplicationConstants.VALID_SKIP;
+import static utils.EndpointConstants.PRODUCT_BY_CATEGORY;
+import static utils.EndpointConstants.PRODUCT_BY_ID;
+import static utils.EndpointConstants.PRODUCT_CATEGORIES;
+import static utils.EndpointConstants.PRODUCT_CREATE;
+import static utils.EndpointConstants.PRODUCT_LIMIT;
+import static utils.EndpointConstants.PRODUCT_LIMIT_INVALID;
+import static utils.EndpointConstants.PRODUCT_LIST;
+import static utils.EndpointConstants.PRODUCT_LIST_PAGINATED;
+import static utils.EndpointConstants.PRODUCT_SEARCH;
+import static utils.EndpointConstants.PRODUCT_SELECT;
+import static utils.EndpointConstants.PRODUCT_SKIP;
+import static utils.EndpointConstants.PRODUCT_SKIP_INVALID;
+import static utils.EndpointConstants.PRODUCT_SORT;
+import static utils.EndpointConstants.PRODUCT_STATUS;
+
+import dto.AuthToken;
 import dto.Product;
 import factory.ProductFactory;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-
-import static io.restassured.RestAssured.given;
-import static utils.ApplicationConstants.*;
-import static utils.EndpointConstants.*;
 
 public class ProductClient {
 
@@ -85,9 +101,19 @@ public class ProductClient {
         return executeGetRequest(String.format(PRODUCT_SORT, order));
     }
 
-    // Private helper methods
-    private ValidatableResponse createProduct(Object body) {
+    public ValidatableResponse listAllProductsWithToken(String token) {
         return given().spec(requestSpec)
+                .header("Authorization", "Bearer " + token)
+                .when()
+                .get(PRODUCT_LIST)
+                .then();
+    }
+
+    private ValidatableResponse createProduct(Object body) {
+        String token = AuthToken.getToken();
+        
+        return given().spec(requestSpec)
+                .header("Authorization", "Bearer " + token)
                 .body(body)
                 .when()
                 .post(PRODUCT_CREATE)
@@ -96,6 +122,7 @@ public class ProductClient {
 
     private ValidatableResponse executeDeleteRequest(Object... pathParams) {
         return given().spec(requestSpec)
+                .header("Authorization", "Bearer " + AuthToken.getToken())
                 .when()
                 .delete(PRODUCT_BY_ID, pathParams)
                 .then();
@@ -103,6 +130,7 @@ public class ProductClient {
 
     private ValidatableResponse executeGetRequest(String endpoint, Object... pathParams) {
         return given().spec(requestSpec)
+                .header("Authorization", "Bearer " + AuthToken.getToken())
                 .when()
                 .get(endpoint, pathParams)
                 .then();
@@ -110,6 +138,7 @@ public class ProductClient {
 
     private ValidatableResponse executePutRequest(Object body, Object... pathParams) {
         return given().spec(requestSpec)
+                .header("Authorization", "Bearer " + AuthToken.getToken())
                 .body(body)
                 .when()
                 .put(PRODUCT_BY_ID, pathParams)
